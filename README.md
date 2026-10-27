@@ -78,8 +78,15 @@ All models were evaluated using an 80/20 stratified split, continuous IQR outlie
 │   ├── data_processor.py            # OOP DataProcessor (IQR capping, encoding, cleaning)
 │   ├── model_pipeline.py            # Training pipeline & evaluation engine
 │   └── utils.py                     # Risk tier evaluator & prescriptive retention logic
+├── tests/
+│   ├── __init__.py
+│   ├── conftest.py                  # Pytest fixtures & sample customer profiles
+│   ├── test_data_processor.py       # Data cleaning, encoding & feature prep tests
+│   ├── test_model_pipeline.py       # Model loading, inference & metric validation
+│   └── test_utils.py                # Risk tiering & prescriptive playbook tests
 ├── app.py                           # Streamlit Web Application
 ├── train.py                         # Standalone ML training entrypoint
+├── run_tests.py                     # Automated test runner script
 ├── TelcoCustomerChurn.csv           # IBM Telco Customer Churn dataset
 ├── finalDraft_4_E_Commerce_Customer_Segmentation_and_Churn_Prediction.ipynb # Jupyter Notebook
 ├── requirements.txt                 # Project dependencies
@@ -93,8 +100,8 @@ All models were evaluated using an 80/20 stratified split, continuous IQR outlie
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/nahidn228/churn-prediction.git
+cd churn-prediction
 ```
 
 ### 2. Set Up Virtual Environment (Recommended)
@@ -124,6 +131,14 @@ python train.py
 streamlit run app.py
 ```
 Open your browser at `http://localhost:8501`.
+
+### 6. Run Automated Tests
+Execute the unit and integration test suite:
+```bash
+pytest -v
+# or
+python run_tests.py
+```
 
 ---
 
