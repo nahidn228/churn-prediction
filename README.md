@@ -1,3 +1,17 @@
+---
+title: Customer Churn & Segmentation Intelligence
+emoji: 🔮
+colorFrom: indigo
+colorTo: purple
+sdk: streamlit
+sdk_version: 1.40.0
+app_file: app.py
+pinned: false
+license: mit
+---
+
+
+
 # 🔮 Customer Segmentation & Churn Prediction Intelligence Platform
 
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
