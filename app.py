@@ -28,10 +28,10 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom High-End CSS
+# Custom High-End Animated CSS
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
     html, body, [class*="css"] {
         font-family: 'Plus Jakarta Sans', sans-serif;
@@ -43,19 +43,125 @@ st.markdown("""
         letter-spacing: -0.02em;
     }
 
-    /* Metric Card Styling */
+    /* Keyframe Animations */
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    @keyframes floatSlow {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-7px) rotate(2deg); }
+    }
+
+    @keyframes pulseGlowRed {
+        0%, 100% {
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.25), inset 0 0 8px rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.45);
+        }
+        50% {
+            box-shadow: 0 0 24px rgba(239, 68, 68, 0.65), inset 0 0 14px rgba(239, 68, 68, 0.25);
+            border-color: rgba(239, 68, 68, 0.85);
+        }
+    }
+
+    @keyframes pulseGlowGreen {
+        0%, 100% {
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+        50% {
+            box-shadow: 0 0 24px rgba(16, 185, 129, 0.6);
+            border-color: rgba(16, 185, 129, 0.8);
+        }
+    }
+
+    @keyframes pulseGlowBlue {
+        0%, 100% {
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+        50% {
+            box-shadow: 0 0 24px rgba(56, 189, 248, 0.55);
+            border-color: rgba(56, 189, 248, 0.8);
+        }
+    }
+
+    @keyframes liveBeaconPulse {
+        0% { transform: scale(0.9); opacity: 0.75; }
+        50% { transform: scale(1.25); opacity: 1; box-shadow: 0 0 14px #38BDF8; }
+        100% { transform: scale(0.9); opacity: 0.75; }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(16px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Animated Gradient Title */
+    .animated-gradient-title {
+        background: linear-gradient(90deg, #6366F1, #38BDF8, #EC4899, #8B5CF6, #38BDF8);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gradientShift 8s ease-in-out infinite;
+        margin-bottom: 4px;
+    }
+
+    /* Floating Logo */
+    .floating-logo {
+        display: inline-block;
+        animation: floatSlow 3.8s ease-in-out infinite;
+        filter: drop-shadow(0 8px 18px rgba(99, 102, 241, 0.45));
+    }
+
+    /* Live Beacon */
+    .live-beacon {
+        display: inline-block;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background-color: #38BDF8;
+        margin-right: 8px;
+        animation: liveBeaconPulse 2s ease-in-out infinite;
+        vertical-align: middle;
+    }
+
+    /* Metric Card Styling with Motion & Glow */
     .metric-card {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+        border: 1px solid rgba(255, 255, 255, 0.09);
         border-radius: 16px;
         padding: 18px 22px;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(8px);
-        transition: transform 0.2s ease, border-color 0.2s ease;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.32s ease, border-color 0.32s ease;
+        animation: fadeInUp 0.45s ease-out forwards;
+    }
+    .metric-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; height: 3px;
+        background: linear-gradient(90deg, #6366F1, #38BDF8, #EC4899);
+        opacity: 0.5;
+        transition: opacity 0.3s ease;
     }
     .metric-card:hover {
-        transform: translateY(-2px);
-        border-color: rgba(99, 102, 241, 0.4);
+        transform: translateY(-5px) scale(1.018);
+        border-color: rgba(99, 102, 241, 0.55);
+        box-shadow: 0 16px 36px -6px rgba(99, 102, 241, 0.28);
+    }
+    .metric-card:hover::before {
+        opacity: 1;
     }
     .metric-title {
         color: #94A3B8;
@@ -66,7 +172,7 @@ st.markdown("""
         margin-bottom: 6px;
     }
     .metric-value {
-        font-size: 1.8rem;
+        font-size: 1.85rem;
         font-weight: 700;
         color: #F8FAFC;
         line-height: 1.1;
@@ -79,20 +185,29 @@ st.markdown("""
 
     /* Glass Panels */
     .glass-panel {
-        background: rgba(30, 41, 59, 0.5);
+        background: rgba(30, 41, 59, 0.55);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 16px;
         padding: 22px;
         margin-bottom: 20px;
+        backdrop-filter: blur(8px);
+        animation: fadeInUp 0.45s ease-out forwards;
     }
 
     /* Strategy Recommendation Card */
     .strategy-card {
-        background: rgba(15, 23, 42, 0.6);
+        background: rgba(15, 23, 42, 0.65);
         border-left: 4px solid #6366F1;
         border-radius: 0 12px 12px 0;
         padding: 14px 18px;
         margin-bottom: 12px;
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-left-color 0.25s ease, background 0.25s ease;
+        animation: fadeInUp 0.4s ease-out forwards;
+    }
+    .strategy-card:hover {
+        transform: translateX(6px);
+        border-left-color: #38BDF8;
+        background: rgba(30, 41, 59, 0.75);
     }
     .strategy-title {
         font-weight: 600;
@@ -106,7 +221,7 @@ st.markdown("""
         line-height: 1.4;
     }
 
-    /* Badge Pills */
+    /* Badge Pills & Pulsing Glow */
     .risk-badge {
         display: inline-block;
         padding: 6px 14px;
@@ -116,24 +231,39 @@ st.markdown("""
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
+    .pulse-danger {
+        animation: pulseGlowRed 2.4s ease-in-out infinite;
+    }
+    .pulse-success {
+        animation: pulseGlowGreen 2.4s ease-in-out infinite;
+    }
+    .pulse-info {
+        animation: pulseGlowBlue 2.4s ease-in-out infinite;
+    }
 
-    /* Streamlit Tab Customization */
+    /* Streamlit Tab Customization & Smooth Transitions */
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
-        background-color: rgba(15, 23, 42, 0.5);
+        background-color: rgba(15, 23, 42, 0.6);
         padding: 6px 8px;
         border-radius: 14px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.06);
     }
     .stTabs [data-baseweb="tab"] {
         border-radius: 10px;
         padding: 8px 18px;
         font-weight: 600;
         color: #94A3B8;
+        transition: all 0.25s ease;
+    }
+    .stTabs [data-baseweb="tab"]:hover {
+        color: #F8FAFC !important;
+        background-color: rgba(99, 102, 241, 0.15);
     }
     .stTabs [aria-selected="true"] {
-        background-color: #6366F1 !important;
+        background: linear-gradient(135deg, #6366F1, #4F46E5) !important;
         color: #FFFFFF !important;
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -258,14 +388,20 @@ if mode == "📤 Upload Custom Dataset / Database":
     # Header Section
     col_logo, col_head = st.columns([1, 8])
     with col_logo:
-        st.markdown("<div style='font-size: 3.2rem; text-align: center;'>⚡</div>", unsafe_allow_html=True)
+        st.markdown("<div class='floating-logo' style='font-size: 3.4rem; text-align: center;'>⚡</div>", unsafe_allow_html=True)
     with col_head:
         st.markdown("""
-            <h1 style='margin-bottom: 2px; background: linear-gradient(90deg, #6366F1, #38BDF8, #EC4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;'>
+            <div style='margin-bottom: 3px;'>
+                <span class='live-beacon'></span>
+                <span style='color: #38BDF8; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;'>
+                    AutoML • Motion Analytics Engine Active
+                </span>
+            </div>
+            <h1 class='animated-gradient-title'>
                 Dynamic AutoML, Visual Analytics & Clustering Engine
             </h1>
             <p style='color: #94A3B8; font-size: 1.05rem; margin-top: 0;'>
-                Upload any database to instantly train 6 classifiers, compute Precision, Recall, F1 score leaderboards, generate Violin distribution plots, and perform K-Means 3D clustering.
+                Upload any database to instantly train 6 classifiers, compute Precision, Recall, F1 score leaderboards, generate Violin distribution plots, and perform K-Means 3D clustering with smooth motion visualization.
             </p>
         """, unsafe_allow_html=True)
 
@@ -439,12 +575,30 @@ if mode == "📤 Upload Custom Dataset / Database":
                 )
 
                 if engine.numeric_cols:
+                    # Interactive Motion & Point Display Controls
+                    ctl_col1, ctl_col2 = st.columns([2, 1])
+                    with ctl_col1:
+                        point_display_mode = st.radio(
+                            "Points & Jitter Visualization Mode",
+                            options=["✨ Animated Jitter Points (All)", "🎯 Outliers Only", "🌊 Smooth Density (No Points)"],
+                            index=0,
+                            horizontal=True,
+                            key="dyn_violin_jitter_mode"
+                        )
+                    with ctl_col2:
+                        show_box_overlay = st.checkbox("Overlay Boxplot Quartiles", value=True, key="dyn_violin_box")
+
+                    points_arg = "all" if "All" in point_display_mode else ("outliers" if "Outliers" in point_display_mode else False)
+                    jitter_arg = 0.55 if points_arg == "all" else 0.0
+                    pointpos_arg = -0.35 if points_arg == "all" else 0.0
+
                     v_col1, v_col2 = st.columns([1, 1])
                     with v_col1:
                         sel_violin_feat = st.selectbox(
                             "Select Continuous Feature for Target Violin Plot",
                             options=engine.numeric_cols,
-                            index=0
+                            index=0,
+                            key="dyn_sel_violin_feat"
                         )
                         # Plotly Violin by Target
                         target_col_to_plot = engine.target_col if engine.target_col and engine.target_col in engine.clean_df.columns else selected_target
@@ -453,16 +607,20 @@ if mode == "📤 Upload Custom Dataset / Database":
                             y=sel_violin_feat,
                             x=target_col_to_plot,
                             color=target_col_to_plot,
-                            box=True,
-                            points="outliers",
+                            box=show_box_overlay,
+                            points=points_arg,
                             color_discrete_sequence=["#10B981", "#EF4444", "#38BDF8", "#F59E0B"]
                         )
+                        if points_arg == "all":
+                            fig_violin_target.update_traces(jitter=jitter_arg, pointpos=pointpos_arg, marker=dict(size=4.5, opacity=0.75))
                         fig_violin_target.update_layout(
                             title=f"Feature Distribution: {sel_violin_feat} by {target_col_to_plot}",
                             paper_bgcolor="rgba(0,0,0,0)",
                             plot_bgcolor="rgba(0,0,0,0)",
                             font=dict(color="#94A3B8"),
-                            margin=dict(l=20, r=20, t=40, b=20)
+                            margin=dict(l=20, r=20, t=40, b=20),
+                            transition={'duration': 650, 'easing': 'cubic-in-out'},
+                            uirevision="dyn_violin_target"
                         )
                         st.plotly_chart(fig_violin_target, use_container_width=True)
 
@@ -470,7 +628,8 @@ if mode == "📤 Upload Custom Dataset / Database":
                         sel_violin_cluster_feat = st.selectbox(
                             "Select Feature for Cluster Violin Plot",
                             options=engine.numeric_cols,
-                            index=min(1, len(engine.numeric_cols) - 1)
+                            index=min(1, len(engine.numeric_cols) - 1),
+                            key="dyn_sel_violin_cluster"
                         )
                         # Plotly Violin by Cluster
                         fig_violin_cluster = px.violin(
@@ -478,27 +637,35 @@ if mode == "📤 Upload Custom Dataset / Database":
                             y=sel_violin_cluster_feat,
                             x="Assigned_Cluster",
                             color="Assigned_Cluster",
-                            box=True,
-                            points="outliers",
+                            box=show_box_overlay,
+                            points=points_arg,
                             color_discrete_sequence=["#6366F1", "#EC4899", "#10B981", "#F59E0B", "#38BDF8"]
                         )
+                        if points_arg == "all":
+                            fig_violin_cluster.update_traces(jitter=jitter_arg, pointpos=pointpos_arg, marker=dict(size=4.5, opacity=0.75))
                         fig_violin_cluster.update_layout(
                             title=f"Feature Distribution: {sel_violin_cluster_feat} across K-Means Clusters",
                             paper_bgcolor="rgba(0,0,0,0)",
                             plot_bgcolor="rgba(0,0,0,0)",
                             font=dict(color="#94A3B8"),
-                            margin=dict(l=20, r=20, t=40, b=20)
+                            margin=dict(l=20, r=20, t=40, b=20),
+                            transition={'duration': 650, 'easing': 'cubic-in-out'},
+                            uirevision="dyn_violin_cluster"
                         )
                         st.plotly_chart(fig_violin_cluster, use_container_width=True)
 
-                    # Correlation Heatmap for continuous features
+                    # Correlation Heatmap for continuous features with color palette selector
                     if len(engine.numeric_cols) >= 2:
-                        st.markdown("#### 🌡️ Continuous Feature Correlation Heatmap")
+                        h_col1, h_col2 = st.columns([3, 1])
+                        with h_col1:
+                            st.markdown("#### 🌡️ Continuous Feature Correlation Heatmap")
+                        with h_col2:
+                            heat_color = st.selectbox("Heatmap Palette", options=["RdBu_r", "Viridis", "Plasma", "Cividis", "Spectral"], index=0, key="dyn_heat_color")
                         corr_sub = engine.clean_df[engine.numeric_cols].corr()
                         fig_corr = px.imshow(
                             corr_sub,
                             text_auto=".2f",
-                            color_continuous_scale="RdBu_r",
+                            color_continuous_scale=heat_color,
                             aspect="auto"
                         )
                         fig_corr.update_layout(
@@ -506,7 +673,9 @@ if mode == "📤 Upload Custom Dataset / Database":
                             plot_bgcolor="rgba(0,0,0,0)",
                             font=dict(color="#94A3B8"),
                             margin=dict(l=20, r=20, t=20, b=20),
-                            height=380
+                            height=380,
+                            transition={'duration': 600, 'easing': 'cubic-in-out'},
+                            uirevision="dyn_corr_heat"
                         )
                         st.plotly_chart(fig_corr, use_container_width=True)
 
@@ -523,6 +692,20 @@ if mode == "📤 Upload Custom Dataset / Database":
                 )
 
                 eval_df = pd.DataFrame(eval_results)
+
+                # Dynamic Metric Re-sorting Controller
+                s_col1, _ = st.columns([2, 1])
+                with s_col1:
+                    sort_metric = st.radio(
+                        "Sort Leaderboard & Comparison by Metric",
+                        options=["F1_Score", "Accuracy", "Precision", "Recall", "ROC_AUC"],
+                        index=0,
+                        horizontal=True,
+                        key="dyn_sort_metric_radio"
+                    )
+
+                eval_df = eval_df.sort_values(by=sort_metric, ascending=False).reset_index(drop=True)
+
                 # Formatted Leaderboard
                 st.dataframe(
                     eval_df.style.highlight_max(
@@ -541,7 +724,7 @@ if mode == "📤 Upload Custom Dataset / Database":
 
                 st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
-                # Grouped Bar Comparison Chart
+                # Grouped Bar Comparison Chart with Animated Metric Transitions
                 melted_df = eval_df.melt(
                     id_vars=["Model"],
                     value_vars=["Accuracy", "Precision", "Recall", "F1_Score"],
@@ -562,12 +745,14 @@ if mode == "📤 Upload Custom Dataset / Database":
                     }
                 )
                 fig_bar.update_layout(
-                    title="Metric Comparison (Accuracy vs Precision vs Recall vs F1 Score)",
+                    title=f"Multi-Metric Benchmark Comparison (Ranked by {sort_metric})",
                     paper_bgcolor="rgba(0,0,0,0)",
                     plot_bgcolor="rgba(0,0,0,0)",
                     font=dict(color="#94A3B8"),
                     yaxis=dict(range=[0, 1.05]),
-                    margin=dict(l=20, r=20, t=40, b=20)
+                    margin=dict(l=20, r=20, t=40, b=20),
+                    transition={'duration': 650, 'easing': 'cubic-in-out'},
+                    uirevision="dyn_leaderboard_bars"
                 )
                 st.plotly_chart(fig_bar, use_container_width=True)
 
@@ -671,6 +856,20 @@ if mode == "📤 Upload Custom Dataset / Database":
                 with p3d_col:
                     st.markdown("#### 🌐 Interactive 3D PCA Projection")
                     if engine.scored_df is not None and "PCA_Dim3" in engine.scored_df.columns:
+                        # 3D Camera flight & orbit controller
+                        cam_preset = st.radio(
+                            "3D Camera Motion & Perspective Flight",
+                            options=["🚀 Isometric Orbit", "🎯 Top-Down Plane", "📐 Frontal Horizon", "🔍 Deep Side Angle"],
+                            index=0,
+                            horizontal=True,
+                            key="dyn_pca_camera_preset"
+                        )
+                        camera_dict = {
+                            "🚀 Isometric Orbit": dict(eye=dict(x=1.55, y=1.55, z=1.25)),
+                            "🎯 Top-Down Plane": dict(eye=dict(x=0.01, y=0.01, z=2.45)),
+                            "📐 Frontal Horizon": dict(eye=dict(x=2.2, y=0.1, z=0.35)),
+                            "🔍 Deep Side Angle": dict(eye=dict(x=0.2, y=2.2, z=0.5))
+                        }
                         fig_pca3 = px.scatter_3d(
                             engine.scored_df.head(1500),
                             x="PCA_Dim1", y="PCA_Dim2", z="PCA_Dim3",
@@ -682,7 +881,15 @@ if mode == "📤 Upload Custom Dataset / Database":
                             paper_bgcolor="rgba(0,0,0,0)",
                             font=dict(color="#94A3B8"),
                             margin=dict(l=10, r=10, t=10, b=10),
-                            height=480
+                            height=480,
+                            scene=dict(
+                                camera=camera_dict[cam_preset],
+                                xaxis=dict(backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.08)"),
+                                yaxis=dict(backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.08)"),
+                                zaxis=dict(backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.08)")
+                            ),
+                            transition={"duration": 750, "easing": "cubic-in-out"},
+                            uirevision="dyn_pca_3d_state"
                         )
                         st.plotly_chart(fig_pca3, use_container_width=True)
                     else:
@@ -703,7 +910,9 @@ if mode == "📤 Upload Custom Dataset / Database":
                             plot_bgcolor="rgba(0,0,0,0)",
                             font=dict(color="#94A3B8"),
                             margin=dict(l=10, r=10, t=10, b=10),
-                            height=480
+                            height=480,
+                            transition={"duration": 600, "easing": "cubic-in-out"},
+                            uirevision="dyn_pca_2d_state"
                         )
                         st.plotly_chart(fig_pca2, use_container_width=True)
 
@@ -768,7 +977,9 @@ if mode == "📤 Upload Custom Dataset / Database":
                             plot_bgcolor="rgba(0,0,0,0)",
                             font=dict(color="#94A3B8"),
                             margin=dict(l=20, r=20, t=40, b=20),
-                            height=360
+                            height=360,
+                            transition={"duration": 600, "easing": "cubic-in-out"},
+                            uirevision="dyn_anom_scatter"
                         )
                         st.plotly_chart(fig_anom, use_container_width=True)
 
@@ -841,11 +1052,12 @@ if mode == "📤 Upload Custom Dataset / Database":
                         pred_prob = best_m.predict_proba(aligned_scaled)[0, 1] if hasattr(best_m, "predict_proba") else 0.5
                         
                         risk_info = evaluate_risk_level(pred_prob)
+                        pulse_class = "pulse-danger" if pred_prob >= 0.65 else ("pulse-success" if pred_prob <= 0.35 else "pulse-info")
                         
                         r_col1, r_col2 = st.columns([1, 2])
                         with r_col1:
                             st.markdown(f"""
-                                <div class="metric-card" style="border-left: 4px solid {risk_info['badge_color']};">
+                                <div class="metric-card {pulse_class}" style="border-left: 4px solid {risk_info['badge_color']};">
                                     <div class="metric-title">Predicted Outcome</div>
                                     <div class="metric-value" style="color: {risk_info['badge_color']};">
                                         {pred_label} ({pred_prob:.1%})
@@ -855,9 +1067,10 @@ if mode == "📤 Upload Custom Dataset / Database":
                             """, unsafe_allow_html=True)
                         with r_col2:
                             fig_gauge = go.Figure(go.Indicator(
-                                mode="gauge+number",
+                                mode="gauge+number+delta",
                                 value=pred_prob * 100,
-                                number={'suffix': "%"},
+                                number={'suffix': "%", 'font': {'size': 28}},
+                                delta={'reference': pos_rate, 'relative': False, 'valueformat': '.1f', 'suffix': "% vs avg"},
                                 gauge={
                                     'axis': {'range': [0, 100]},
                                     'bar': {'color': risk_info['badge_color']},
@@ -865,10 +1078,22 @@ if mode == "📤 Upload Custom Dataset / Database":
                                         {'range': [0, 35], 'color': "rgba(16, 185, 129, 0.2)"},
                                         {'range': [35, 65], 'color': "rgba(245, 158, 11, 0.2)"},
                                         {'range': [65, 100], 'color': "rgba(239, 68, 68, 0.2)"}
-                                    ]
+                                    ],
+                                    'threshold': {
+                                        'line': {'color': "#EF4444", 'width': 3},
+                                        'thickness': 0.75,
+                                        'value': 65
+                                    }
                                 }
                             ))
-                            fig_gauge.update_layout(height=180, margin=dict(l=20, r=20, t=20, b=10), paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#94A3B8"))
+                            fig_gauge.update_layout(
+                                height=200,
+                                margin=dict(l=20, r=20, t=20, b=10),
+                                paper_bgcolor="rgba(0,0,0,0)",
+                                font=dict(color="#94A3B8"),
+                                transition={'duration': 650, 'easing': 'cubic-in-out'},
+                                uirevision="dyn_gauge"
+                            )
                             st.plotly_chart(fig_gauge, use_container_width=True)
 
                 st.markdown("---")
@@ -900,14 +1125,20 @@ else:
     # Header Section
     col_logo, col_head = st.columns([1, 8])
     with col_logo:
-        st.markdown("<div style='font-size: 3.2rem; text-align: center;'>🔮</div>", unsafe_allow_html=True)
+        st.markdown("<div class='floating-logo' style='font-size: 3.4rem; text-align: center;'>🔮</div>", unsafe_allow_html=True)
     with col_head:
         st.markdown("""
-            <h1 style='margin-bottom: 2px; background: linear-gradient(90deg, #6366F1, #A855F7, #EC4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;'>
+            <div style='margin-bottom: 3px;'>
+                <span class='live-beacon'></span>
+                <span style='color: #38BDF8; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;'>
+                    Pre-Trained Benchmark Engine Active
+                </span>
+            </div>
+            <h1 class='animated-gradient-title'>
                 Customer Segmentation & Churn Intelligence Engine
             </h1>
             <p style='color: #94A3B8; font-size: 1.05rem; margin-top: 0;'>
-                Production-grade pre-trained machine learning platform for customer churn risk prediction, behavioral K-Means clustering, and anomaly detection.
+                Production-grade pre-trained machine learning platform for customer churn risk prediction, behavioral K-Means clustering, and anomaly detection with interactive motion visualizations.
             </p>
         """, unsafe_allow_html=True)
 
@@ -999,7 +1230,9 @@ else:
                     plot_bgcolor='rgba(0,0,0,0)',
                     font=dict(color='#94A3B8'),
                     coloraxis_showscale=False,
-                    margin=dict(l=20, r=20, t=20, b=20)
+                    margin=dict(l=20, r=20, t=20, b=20),
+                    transition={'duration': 600, 'easing': 'cubic-in-out'},
+                    uirevision="telco_contract_bar"
                 )
                 st.plotly_chart(fig_contract, use_container_width=True)
 
@@ -1020,7 +1253,9 @@ else:
                     plot_bgcolor='rgba(0,0,0,0)',
                     font=dict(color='#94A3B8'),
                     coloraxis_showscale=False,
-                    margin=dict(l=20, r=20, t=20, b=20)
+                    margin=dict(l=20, r=20, t=20, b=20),
+                    transition={'duration': 600, 'easing': 'cubic-in-out'},
+                    uirevision="telco_internet_bar"
                 )
                 st.plotly_chart(fig_internet, use_container_width=True)
 
@@ -1034,28 +1269,50 @@ else:
         )
 
         if dataset_df is not None:
+            # Interactive Point Jitter & Display Controls
+            t_col_c1, t_col_c2 = st.columns([2, 1])
+            with t_col_c1:
+                t_point_mode = st.radio(
+                    "Points & Jitter Visualization Mode",
+                    options=["✨ Animated Jitter Points (All)", "🎯 Outliers Only", "🌊 Smooth Density (No Points)"],
+                    index=0,
+                    horizontal=True,
+                    key="telco_violin_jitter_mode"
+                )
+            with t_col_c2:
+                t_box_overlay = st.checkbox("Overlay Boxplot Quartiles", value=True, key="telco_violin_box")
+
+            t_points_arg = "all" if "All" in t_point_mode else ("outliers" if "Outliers" in t_point_mode else False)
+            t_jitter_arg = 0.55 if t_points_arg == "all" else 0.0
+            t_pointpos_arg = -0.35 if t_points_arg == "all" else 0.0
+
             v_col1, v_col2 = st.columns([1, 1])
             with v_col1:
                 sel_telco_v = st.selectbox(
                     "Feature for Churn Violin Plot",
                     options=["tenure", "MonthlyCharges", "TotalCharges"],
-                    index=0
+                    index=0,
+                    key="telco_sel_v1"
                 )
                 fig_v_telco = px.violin(
                     dataset_df,
                     y=sel_telco_v,
                     x="Churn",
                     color="Churn",
-                    box=True,
-                    points="outliers",
+                    box=t_box_overlay,
+                    points=t_points_arg,
                     color_discrete_map={"No": "#10B981", "Yes": "#EF4444"}
                 )
+                if t_points_arg == "all":
+                    fig_v_telco.update_traces(jitter=t_jitter_arg, pointpos=t_pointpos_arg, marker=dict(size=4.5, opacity=0.75))
                 fig_v_telco.update_layout(
                     title=f"Distribution of {sel_telco_v} by Churn Status",
                     paper_bgcolor="rgba(0,0,0,0)",
                     plot_bgcolor="rgba(0,0,0,0)",
                     font=dict(color="#94A3B8"),
-                    margin=dict(l=20, r=20, t=40, b=20)
+                    margin=dict(l=20, r=20, t=40, b=20),
+                    transition={'duration': 650, 'easing': 'cubic-in-out'},
+                    uirevision="telco_violin_churn"
                 )
                 st.plotly_chart(fig_v_telco, use_container_width=True)
 
@@ -1063,23 +1320,28 @@ else:
                 sel_telco_v2 = st.selectbox(
                     "Feature for Contract Violin Plot",
                     options=["MonthlyCharges", "tenure", "TotalCharges"],
-                    index=0
+                    index=0,
+                    key="telco_sel_v2"
                 )
                 fig_v_contract = px.violin(
                     dataset_df,
                     y=sel_telco_v2,
                     x="Contract",
                     color="Contract",
-                    box=True,
-                    points="outliers",
+                    box=t_box_overlay,
+                    points=t_points_arg,
                     color_discrete_sequence=["#6366F1", "#EC4899", "#38BDF8"]
                 )
+                if t_points_arg == "all":
+                    fig_v_contract.update_traces(jitter=t_jitter_arg, pointpos=t_pointpos_arg, marker=dict(size=4.5, opacity=0.75))
                 fig_v_contract.update_layout(
                     title=f"Distribution of {sel_telco_v2} by Contract Duration",
                     paper_bgcolor="rgba(0,0,0,0)",
                     plot_bgcolor="rgba(0,0,0,0)",
                     font=dict(color="#94A3B8"),
-                    margin=dict(l=20, r=20, t=40, b=20)
+                    margin=dict(l=20, r=20, t=40, b=20),
+                    transition={'duration': 650, 'easing': 'cubic-in-out'},
+                    uirevision="telco_violin_contract"
                 )
                 st.plotly_chart(fig_v_contract, use_container_width=True)
 
@@ -1182,8 +1444,9 @@ else:
 
         res1, res2 = st.columns([1, 1])
         with res1:
+            pulse_class = "pulse-danger" if prob >= 0.65 else ("pulse-success" if prob <= 0.35 else "pulse-info")
             st.markdown(f"""
-                <div class="metric-card" style="border-left: 4px solid {risk_info['badge_color']};">
+                <div class="metric-card {pulse_class}" style="border-left: 4px solid {risk_info['badge_color']};">
                     <div class="metric-title">Predicted Risk Assessment ({selected_model_name})</div>
                     <div class="metric-value" style="color: {risk_info['badge_color']};">
                         {risk_info['tier']} • {prob * 100:.1f}% Churn Risk
@@ -1193,9 +1456,10 @@ else:
             """, unsafe_allow_html=True)
             
             fig_g = go.Figure(go.Indicator(
-                mode="gauge+number",
+                mode="gauge+number+delta",
                 value=prob * 100,
-                number={'suffix': "%"},
+                number={'suffix': "%", 'font': {'size': 28}},
+                delta={'reference': 26.6, 'relative': False, 'valueformat': '.1f', 'suffix': "% vs avg"},
                 gauge={
                     'axis': {'range': [0, 100]},
                     'bar': {'color': risk_info['badge_color']},
@@ -1203,10 +1467,22 @@ else:
                         {'range': [0, 35], 'color': "rgba(16, 185, 129, 0.2)"},
                         {'range': [35, 65], 'color': "rgba(245, 158, 11, 0.2)"},
                         {'range': [65, 100], 'color': "rgba(239, 68, 68, 0.2)"}
-                    ]
+                    ],
+                    'threshold': {
+                        'line': {'color': "#EF4444", 'width': 3},
+                        'thickness': 0.75,
+                        'value': 65
+                    }
                 }
             ))
-            fig_g.update_layout(height=180, margin=dict(l=20, r=20, t=10, b=10), paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#94A3B8"))
+            fig_g.update_layout(
+                height=200,
+                margin=dict(l=20, r=20, t=20, b=10),
+                paper_bgcolor="rgba(0,0,0,0)",
+                font=dict(color="#94A3B8"),
+                transition={'duration': 650, 'easing': 'cubic-in-out'},
+                uirevision="telco_gauge"
+            )
             st.plotly_chart(fig_g, use_container_width=True)
 
         with res2:
@@ -1249,13 +1525,38 @@ else:
             p3, p2 = st.columns([1, 1])
             with p3:
                 st.markdown("#### 🌐 3D PCA Projection")
+                telco_cam_preset = st.radio(
+                    "3D Camera Motion & Perspective Flight",
+                    options=["🚀 Isometric Orbit", "🎯 Top-Down Plane", "📐 Frontal Horizon", "🔍 Deep Side Angle"],
+                    index=0,
+                    horizontal=True,
+                    key="telco_pca_cam_preset"
+                )
+                t_camera_dict = {
+                    "🚀 Isometric Orbit": dict(eye=dict(x=1.55, y=1.55, z=1.25)),
+                    "🎯 Top-Down Plane": dict(eye=dict(x=0.01, y=0.01, z=2.45)),
+                    "📐 Frontal Horizon": dict(eye=dict(x=2.2, y=0.1, z=0.35)),
+                    "🔍 Deep Side Angle": dict(eye=dict(x=0.2, y=2.2, z=0.5))
+                }
                 fig_3d = px.scatter_3d(
                     viz_df, x="pc1", y="pc2", z="pc3",
                     color="Cluster_Name",
                     hover_data=["tenure", "monthly_charges"],
                     color_discrete_sequence=["#10B981", "#F59E0B", "#EF4444"]
                 )
-                fig_3d.update_layout(paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#94A3B8"), height=460)
+                fig_3d.update_layout(
+                    paper_bgcolor="rgba(0,0,0,0)",
+                    font=dict(color="#94A3B8"),
+                    height=480,
+                    scene=dict(
+                        camera=t_camera_dict[telco_cam_preset],
+                        xaxis=dict(backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.08)"),
+                        yaxis=dict(backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.08)"),
+                        zaxis=dict(backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.08)")
+                    ),
+                    transition={"duration": 750, "easing": "cubic-in-out"},
+                    uirevision="telco_3d_pca_state"
+                )
                 st.plotly_chart(fig_3d, use_container_width=True)
 
             with p2:
@@ -1266,7 +1567,14 @@ else:
                     hover_data=["tenure", "monthly_charges"],
                     color_discrete_sequence=["#10B981", "#F59E0B", "#EF4444"]
                 )
-                fig_2d.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="#94A3B8"), height=460)
+                fig_2d.update_layout(
+                    paper_bgcolor="rgba(0,0,0,0)",
+                    plot_bgcolor="rgba(0,0,0,0)",
+                    font=dict(color="#94A3B8"),
+                    height=480,
+                    transition={"duration": 600, "easing": "cubic-in-out"},
+                    uirevision="telco_2d_pca_state"
+                )
                 st.plotly_chart(fig_2d, use_container_width=True)
 
     # -------------------------------------------------------------------------
@@ -1291,10 +1599,64 @@ else:
     with tab_benchmark:
         st.markdown("### 📈 Supervised Machine Learning Benchmark Leaderboard")
         eval_df = pd.DataFrame(meta.get("evaluation_results", []))
+
+        # Dynamic metric sorting
+        tb_col, _ = st.columns([2, 1])
+        with tb_col:
+            t_sort_metric = st.radio(
+                "Sort Leaderboard & Comparison by Metric",
+                options=["F1_Score", "Accuracy", "Precision", "Recall", "ROC_AUC"],
+                index=0,
+                horizontal=True,
+                key="telco_bench_sort_metric"
+            )
+
+        eval_df = eval_df.sort_values(by=t_sort_metric, ascending=False).reset_index(drop=True)
+
         st.dataframe(
-            eval_df.style.highlight_max(axis=0, subset=['Accuracy', 'Precision', 'Recall', 'F1_Score', 'ROC_AUC'], color="#6366F144"),
+            eval_df.style.highlight_max(axis=0, subset=['Accuracy', 'Precision', 'Recall', 'F1_Score', 'ROC_AUC'], color="#6366F144").format({
+                "Accuracy": "{:.4f}",
+                "Precision": "{:.4f}",
+                "Recall": "{:.4f}",
+                "F1_Score": "{:.4f}",
+                "ROC_AUC": lambda v: f"{v:.4f}" if v is not None and not pd.isna(v) else "N/A"
+            }),
             use_container_width=True
         )
+
+        st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+
+        # Grouped Bar Comparison Chart with Animated Transitions
+        melted_telco = eval_df.melt(
+            id_vars=["Model"],
+            value_vars=["Accuracy", "Precision", "Recall", "F1_Score"],
+            var_name="Metric",
+            value_name="Score"
+        )
+        fig_telco_bars = px.bar(
+            melted_telco,
+            x="Model",
+            y="Score",
+            color="Metric",
+            barmode="group",
+            color_discrete_map={
+                "Accuracy": "#38BDF8",
+                "Precision": "#10B981",
+                "Recall": "#F59E0B",
+                "F1_Score": "#6366F1"
+            }
+        )
+        fig_telco_bars.update_layout(
+            title=f"Multi-Metric Benchmark Comparison (Ranked by {t_sort_metric})",
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font=dict(color="#94A3B8"),
+            yaxis=dict(range=[0, 1.05]),
+            margin=dict(l=20, r=20, t=40, b=20),
+            transition={'duration': 650, 'easing': 'cubic-in-out'},
+            uirevision="telco_leaderboard_bars"
+        )
+        st.plotly_chart(fig_telco_bars, use_container_width=True)
 
         b1, b2 = st.columns([1, 1])
         with b1:
@@ -1303,14 +1665,27 @@ else:
             for m_name, r_data in meta.get("roc_data", {}).items():
                 fig_roc.add_trace(go.Scatter(x=r_data["fpr"], y=r_data["tpr"], mode='lines', name=f"{m_name} (AUC={r_data['auc']:.2f})"))
             fig_roc.add_trace(go.Scatter(x=[0, 1], y=[0, 1], mode='lines', line=dict(dash='dash', color='#64748B'), name="Random Baseline"))
-            fig_roc.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(color='#94A3B8'))
+            fig_roc.update_layout(
+                paper_bgcolor='rgba(0,0,0,0)',
+                plot_bgcolor='rgba(0,0,0,0)',
+                font=dict(color='#94A3B8'),
+                transition={'duration': 600, 'easing': 'cubic-in-out'},
+                uirevision="telco_roc_plot"
+            )
             st.plotly_chart(fig_roc, use_container_width=True)
 
         with b2:
             st.markdown("#### 🌳 Top Feature Importances (Random Forest)")
             feat_df = pd.DataFrame(meta.get("feature_importances", [])[:12]).sort_values(by='importance', ascending=True)
             fig_imp = px.bar(feat_df, x='importance', y='feature', orientation='h', color='importance', color_continuous_scale='Viridis')
-            fig_imp.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(color='#94A3B8'), coloraxis_showscale=False)
+            fig_imp.update_layout(
+                paper_bgcolor='rgba(0,0,0,0)',
+                plot_bgcolor='rgba(0,0,0,0)',
+                font=dict(color='#94A3B8'),
+                coloraxis_showscale=False,
+                transition={'duration': 600, 'easing': 'cubic-in-out'},
+                uirevision="telco_feat_imp"
+            )
             st.plotly_chart(fig_imp, use_container_width=True)
 
 
