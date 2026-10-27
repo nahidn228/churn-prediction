@@ -143,14 +143,16 @@ class DataProcessor:
         drop_cols = [c for c in raw_df.columns if c.lower() in ['customerid', 'churn', 'target', 'class']]
         raw_df = raw_df.drop(columns=drop_cols, errors='ignore')
 
-        # One hot encode
-        encoded_df = pd.get_dummies(raw_df, drop_first=True, dtype=int)
+        # One-hot encode with drop_first=False so single-row data retains its categorical columns
+        encoded_df = pd.get_dummies(raw_df, drop_first=False, dtype=int)
 
         # Align with expected columns
         aligned_df = pd.DataFrame(0, index=raw_df.index, columns=expected_columns)
         for col in expected_columns:
             if col in encoded_df.columns:
                 aligned_df[col] = encoded_df[col]
+            elif col in raw_df.columns:
+                aligned_df[col] = pd.to_numeric(raw_df[col], errors='coerce').fillna(0)
             else:
                 aligned_df[col] = 0
 
