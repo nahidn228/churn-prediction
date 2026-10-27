@@ -241,6 +241,128 @@ st.markdown("""
         animation: pulseGlowBlue 2.4s ease-in-out infinite;
     }
 
+    /* Plain-English Explanation Box */
+    .explanation-box {
+        background: rgba(15, 23, 42, 0.72);
+        border-left: 4px solid #38BDF8;
+        border-radius: 0 14px 14px 0;
+        padding: 16px 20px;
+        margin: 12px 0 20px 0;
+        font-size: 0.88rem;
+        color: #CBD5E1;
+        line-height: 1.6;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        animation: fadeInUp 0.4s ease-out forwards;
+    }
+    .explanation-title {
+        font-weight: 700;
+        color: #38BDF8;
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* Sidebar Dynamic Motion */
+    @keyframes slideInSidebar {
+        from {
+            opacity: 0.7;
+            transform: translateX(-12px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    [data-testid="stSidebar"] {
+        animation: slideInSidebar 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    [data-testid="stSidebar"] [data-baseweb="radio"] {
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.25s ease, border-color 0.25s ease;
+        border-radius: 12px;
+        padding: 8px 12px;
+        margin-bottom: 6px;
+        border: 1px solid transparent;
+    }
+    [data-testid="stSidebar"] [data-baseweb="radio"]:hover {
+        transform: translateX(6px);
+        background-color: rgba(99, 102, 241, 0.16);
+        border-color: rgba(99, 102, 241, 0.35);
+    }
+    [data-testid="stSidebar"] button {
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+        border-radius: 10px;
+    }
+    [data-testid="stSidebar"] button:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+    }
+    [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] {
+        transition: all 0.3s ease;
+        border: 1px dashed rgba(99, 102, 241, 0.45);
+        border-radius: 12px;
+        background: rgba(15, 23, 42, 0.45);
+    }
+    [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"]:hover {
+        border-color: #38BDF8;
+        transform: scale(1.015);
+        box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+    }
+
+    /* First Showing Page (Welcome Screen) Motion */
+    @keyframes borderGlowPulse {
+        0%, 100% {
+            border-color: rgba(99, 102, 241, 0.35);
+            box-shadow: 0 0 18px rgba(99, 102, 241, 0.15);
+        }
+        50% {
+            border-color: rgba(56, 189, 248, 0.7);
+            box-shadow: 0 0 32px rgba(56, 189, 248, 0.35);
+        }
+    }
+    @keyframes quickTestPulse {
+        0%, 100% {
+            border-color: rgba(99, 102, 241, 0.35);
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.15);
+        }
+        50% {
+            border-color: rgba(56, 189, 248, 0.75);
+            box-shadow: 0 0 24px rgba(56, 189, 248, 0.35);
+        }
+    }
+    .animated-welcome-box {
+        animation: borderGlowPulse 4s ease-in-out infinite, fadeInUp 0.5s ease-out forwards;
+        transition: transform 0.3s ease;
+    }
+    .welcome-step-card {
+        background: rgba(15, 23, 42, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: 20px;
+        text-align: left;
+        transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .welcome-step-card:hover {
+        transform: translateY(-6px) scale(1.02);
+        border-color: rgba(56, 189, 248, 0.65);
+        box-shadow: 0 12px 28px rgba(56, 189, 248, 0.2);
+    }
+    .quick-test-pill {
+        background: rgba(99, 102, 241, 0.12);
+        border: 1px solid rgba(99, 102, 241, 0.35);
+        border-radius: 12px;
+        padding: 12px 22px;
+        display: inline-block;
+        color: #E2E8F0;
+        font-size: 0.92rem;
+        animation: quickTestPulse 3.2s ease-in-out infinite;
+        transition: transform 0.25s ease;
+    }
+    .quick-test-pill:hover {
+        transform: scale(1.02);
+    }
+
     /* Streamlit Tab Customization & Smooth Transitions */
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
@@ -321,9 +443,12 @@ def load_telco_dataset():
 # -----------------------------------------------------------------------------
 st.sidebar.markdown("""
 <div style='text-align: center; padding: 6px 0 16px 0;'>
-    <div style='font-size: 2.5rem;'>🔮</div>
-    <h2 style='margin: 4px 0 0 0; color: #F8FAFC; font-size: 1.4rem;'>Intelligence Studio</h2>
-    <p style='color: #94A3B8; font-size: 0.8rem; margin: 0;'>Dynamic ML & Analytics Platform</p>
+    <div class='floating-logo' style='font-size: 2.8rem;'>🔮</div>
+    <h2 style='margin: 4px 0 0 0; color: #F8FAFC; font-size: 1.35rem;'>Intelligence Studio</h2>
+    <div style='display: inline-flex; align-items: center; justify-content: center; margin-top: 4px;'>
+        <span class='live-beacon'></span>
+        <span style='color: #94A3B8; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;'>ML & Analytics Studio</span>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -406,17 +531,30 @@ if mode == "📤 Upload Custom Dataset / Database":
         """, unsafe_allow_html=True)
 
     if st.session_state["dynamic_raw_df"] is None:
-        # Welcome & Instructions Banner
+        # Welcome & Instructions Banner with dynamic motion
         st.markdown("""
-            <div class="glass-panel" style="text-align: center; padding: 48px 24px; border: 1px dashed rgba(99, 102, 241, 0.4);">
-                <div style="font-size: 3.5rem; margin-bottom: 12px;">📂</div>
-                <h2 style="color: #F8FAFC; margin-bottom: 8px;">Upload Any Tabular Dataset to Begin</h2>
-                <p style="color: #94A3B8; max-width: 600px; margin: 0 auto 20px auto; font-size: 0.95rem;">
-                    Upload your customer churn dataset, sales transactions, or credit records in CSV or Excel format.
-                    The platform auto-detects features, cleans data, trains 6 ML models, and builds interactive violin plots and cluster visualizations.
+            <div class="glass-panel animated-welcome-box" style="text-align: center; padding: 42px 28px; border: 2px dashed rgba(99, 102, 241, 0.45); border-radius: 20px;">
+                <div class="floating-logo" style="font-size: 4rem; margin-bottom: 12px;">📂</div>
+                <h2 style="color: #F8FAFC; margin-bottom: 8px; font-size: 1.8rem;">Upload Any Customer Database to Get Started</h2>
+                <p style="color: #94A3B8; max-width: 640px; margin: 0 auto 24px auto; font-size: 0.96rem; line-height: 1.5;">
+                    Drop your CSV or Excel database to auto-detect columns, train 6 AI classifiers, compute Precision, Recall & F1 leaderboards, and map behavioral customer clusters in interactive 3D space.
                 </p>
-                <div style="color: #64748B; font-size: 0.85rem;">
-                    💡 Tip: Click <b>'🎲 Sample Data'</b> in the sidebar to test instantly with a synthetic E-Commerce portfolio.
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; max-width: 780px; margin: 0 auto 24px auto;">
+                    <div class="welcome-step-card">
+                        <div style="font-weight: 700; font-size: 1.05rem; color: #F8FAFC; margin-bottom: 4px;">📁 1. Ingest Data</div>
+                        <div style="font-size: 0.83rem; color: #94A3B8;">Upload any tabular file. The engine auto-cleans missing entries and encodes features.</div>
+                    </div>
+                    <div class="welcome-step-card">
+                        <div style="font-weight: 700; font-size: 1.05rem; color: #F8FAFC; margin-bottom: 4px;">🤖 2. AutoML Arena</div>
+                        <div style="font-size: 0.83rem; color: #94A3B8;">Automatically benchmarks 6 ML models with Precision, Recall, F1 and ROC curves.</div>
+                    </div>
+                    <div class="welcome-step-card">
+                        <div style="font-weight: 700; font-size: 1.05rem; color: #F8FAFC; margin-bottom: 4px;">👥 3. Visual Clusters</div>
+                        <div style="font-size: 0.83rem; color: #94A3B8;">Explore Violin distribution plots and interactive 3D K-Means customer tribes.</div>
+                    </div>
+                </div>
+                <div class="quick-test-pill">
+                    💡 <b>Quick Test:</b> Click <b>'🎲 Sample Data'</b> in the left sidebar to explore an instant synthetic E-Commerce portfolio.
                 </div>
             </div>
         """, unsafe_allow_html=True)
@@ -569,36 +707,24 @@ if mode == "📤 Upload Custom Dataset / Database":
             # -----------------------------------------------------------------
             with d_tab_violin:
                 st.markdown("### 🎻 Multi-Dimensional Feature Violin & Density Distribution")
-                st.write(
-                    "Violin plots combine kernel density estimation (KDE) with box plots to visualize multimodal distributions, "
-                    "interquartile ranges, and outlier spread across target classes and clusters."
-                )
+                st.markdown("""
+                    <div class="explanation-box">
+                        <div class="explanation-title">💡 How to Read Violin Plots (Plain English)</div>
+                        <div>
+                            • <b>What is it?</b> Think of the violin as a customer crowd map. The fatter/wider the violin at any point, the more customers have that exact value (like tenure or monthly spend).<br>
+                            • <b>The Inner Box & Dot:</b> The thick bar inside shows the typical customer average (median) and the middle 50% group.<br>
+                            • <b>Spotting Churn:</b> Compare the shapes side-by-side. If the churned group is fat near the bottom, it shows newer customers are leaving early!
+                        </div>
+                    </div>
+                """, unsafe_allow_html=True)
 
                 if engine.numeric_cols:
-                    # Interactive Motion & Point Display Controls
-                    ctl_col1, ctl_col2 = st.columns([2, 1])
-                    with ctl_col1:
-                        point_display_mode = st.radio(
-                            "Points & Jitter Visualization Mode",
-                            options=["✨ Animated Jitter Points (All)", "🎯 Outliers Only", "🌊 Smooth Density (No Points)"],
-                            index=0,
-                            horizontal=True,
-                            key="dyn_violin_jitter_mode"
-                        )
-                    with ctl_col2:
-                        show_box_overlay = st.checkbox("Overlay Boxplot Quartiles", value=True, key="dyn_violin_box")
-
-                    points_arg = "all" if "All" in point_display_mode else ("outliers" if "Outliers" in point_display_mode else False)
-                    jitter_arg = 0.55 if points_arg == "all" else 0.0
-                    pointpos_arg = -0.35 if points_arg == "all" else 0.0
-
                     v_col1, v_col2 = st.columns([1, 1])
                     with v_col1:
                         sel_violin_feat = st.selectbox(
                             "Select Continuous Feature for Target Violin Plot",
                             options=engine.numeric_cols,
-                            index=0,
-                            key="dyn_sel_violin_feat"
+                            index=0
                         )
                         # Plotly Violin by Target
                         target_col_to_plot = engine.target_col if engine.target_col and engine.target_col in engine.clean_df.columns else selected_target
@@ -607,20 +733,16 @@ if mode == "📤 Upload Custom Dataset / Database":
                             y=sel_violin_feat,
                             x=target_col_to_plot,
                             color=target_col_to_plot,
-                            box=show_box_overlay,
-                            points=points_arg,
+                            box=True,
+                            points="outliers",
                             color_discrete_sequence=["#10B981", "#EF4444", "#38BDF8", "#F59E0B"]
                         )
-                        if points_arg == "all":
-                            fig_violin_target.update_traces(jitter=jitter_arg, pointpos=pointpos_arg, marker=dict(size=4.5, opacity=0.75))
                         fig_violin_target.update_layout(
                             title=f"Feature Distribution: {sel_violin_feat} by {target_col_to_plot}",
                             paper_bgcolor="rgba(0,0,0,0)",
                             plot_bgcolor="rgba(0,0,0,0)",
                             font=dict(color="#94A3B8"),
-                            margin=dict(l=20, r=20, t=40, b=20),
-                            transition={'duration': 650, 'easing': 'cubic-in-out'},
-                            uirevision="dyn_violin_target"
+                            margin=dict(l=20, r=20, t=40, b=20)
                         )
                         st.plotly_chart(fig_violin_target, use_container_width=True)
 
@@ -628,8 +750,7 @@ if mode == "📤 Upload Custom Dataset / Database":
                         sel_violin_cluster_feat = st.selectbox(
                             "Select Feature for Cluster Violin Plot",
                             options=engine.numeric_cols,
-                            index=min(1, len(engine.numeric_cols) - 1),
-                            key="dyn_sel_violin_cluster"
+                            index=min(1, len(engine.numeric_cols) - 1)
                         )
                         # Plotly Violin by Cluster
                         fig_violin_cluster = px.violin(
@@ -637,35 +758,27 @@ if mode == "📤 Upload Custom Dataset / Database":
                             y=sel_violin_cluster_feat,
                             x="Assigned_Cluster",
                             color="Assigned_Cluster",
-                            box=show_box_overlay,
-                            points=points_arg,
+                            box=True,
+                            points="outliers",
                             color_discrete_sequence=["#6366F1", "#EC4899", "#10B981", "#F59E0B", "#38BDF8"]
                         )
-                        if points_arg == "all":
-                            fig_violin_cluster.update_traces(jitter=jitter_arg, pointpos=pointpos_arg, marker=dict(size=4.5, opacity=0.75))
                         fig_violin_cluster.update_layout(
                             title=f"Feature Distribution: {sel_violin_cluster_feat} across K-Means Clusters",
                             paper_bgcolor="rgba(0,0,0,0)",
                             plot_bgcolor="rgba(0,0,0,0)",
                             font=dict(color="#94A3B8"),
-                            margin=dict(l=20, r=20, t=40, b=20),
-                            transition={'duration': 650, 'easing': 'cubic-in-out'},
-                            uirevision="dyn_violin_cluster"
+                            margin=dict(l=20, r=20, t=40, b=20)
                         )
                         st.plotly_chart(fig_violin_cluster, use_container_width=True)
 
-                    # Correlation Heatmap for continuous features with color palette selector
+                    # Correlation Heatmap for continuous features
                     if len(engine.numeric_cols) >= 2:
-                        h_col1, h_col2 = st.columns([3, 1])
-                        with h_col1:
-                            st.markdown("#### 🌡️ Continuous Feature Correlation Heatmap")
-                        with h_col2:
-                            heat_color = st.selectbox("Heatmap Palette", options=["RdBu_r", "Viridis", "Plasma", "Cividis", "Spectral"], index=0, key="dyn_heat_color")
+                        st.markdown("#### 🌡️ Continuous Feature Correlation Heatmap")
                         corr_sub = engine.clean_df[engine.numeric_cols].corr()
                         fig_corr = px.imshow(
                             corr_sub,
                             text_auto=".2f",
-                            color_continuous_scale=heat_color,
+                            color_continuous_scale="RdBu_r",
                             aspect="auto"
                         )
                         fig_corr.update_layout(
@@ -673,9 +786,7 @@ if mode == "📤 Upload Custom Dataset / Database":
                             plot_bgcolor="rgba(0,0,0,0)",
                             font=dict(color="#94A3B8"),
                             margin=dict(l=20, r=20, t=20, b=20),
-                            height=380,
-                            transition={'duration': 600, 'easing': 'cubic-in-out'},
-                            uirevision="dyn_corr_heat"
+                            height=380
                         )
                         st.plotly_chart(fig_corr, use_container_width=True)
 
@@ -687,24 +798,19 @@ if mode == "📤 Upload Custom Dataset / Database":
             # -----------------------------------------------------------------
             with d_tab_leaderboard:
                 st.markdown("### 📈 Supervised Model Benchmark & Evaluation Leaderboard")
-                st.write(
-                    "Direct head-to-head comparison of Accuracy, Precision, Recall, F1 Score, and ROC-AUC evaluated on the holdout test set."
-                )
+                st.markdown("""
+                    <div class="explanation-box">
+                        <div class="explanation-title">💡 How to Read Model Scores (Plain English)</div>
+                        <div>
+                            • <b>Accuracy:</b> Overall score — what % of all customer predictions (both stay and leave) were correct?<br>
+                            • <b>Precision (Few False Alarms):</b> When the AI says a customer will leave, how often is it right? High precision avoids wasting discounts on people who would stay anyway.<br>
+                            • <b>Recall (Catching Everyone):</b> Out of all customers who actually left, how many did the AI catch in advance? High recall means almost no churners slip away unnoticed.<br>
+                            • <b>F1 Score:</b> The balanced master score between Precision and Recall. The model with the highest F1 score is your Champion!
+                        </div>
+                    </div>
+                """, unsafe_allow_html=True)
 
                 eval_df = pd.DataFrame(eval_results)
-
-                # Dynamic Metric Re-sorting Controller
-                s_col1, _ = st.columns([2, 1])
-                with s_col1:
-                    sort_metric = st.radio(
-                        "Sort Leaderboard & Comparison by Metric",
-                        options=["F1_Score", "Accuracy", "Precision", "Recall", "ROC_AUC"],
-                        index=0,
-                        horizontal=True,
-                        key="dyn_sort_metric_radio"
-                    )
-
-                eval_df = eval_df.sort_values(by=sort_metric, ascending=False).reset_index(drop=True)
 
                 # Formatted Leaderboard
                 st.dataframe(
@@ -724,7 +830,7 @@ if mode == "📤 Upload Custom Dataset / Database":
 
                 st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
-                # Grouped Bar Comparison Chart with Animated Metric Transitions
+                # Grouped Bar Comparison Chart
                 melted_df = eval_df.melt(
                     id_vars=["Model"],
                     value_vars=["Accuracy", "Precision", "Recall", "F1_Score"],
@@ -745,14 +851,12 @@ if mode == "📤 Upload Custom Dataset / Database":
                     }
                 )
                 fig_bar.update_layout(
-                    title=f"Multi-Metric Benchmark Comparison (Ranked by {sort_metric})",
+                    title="Model Metric Comparison (Accuracy vs Precision vs Recall vs F1 Score)",
                     paper_bgcolor="rgba(0,0,0,0)",
                     plot_bgcolor="rgba(0,0,0,0)",
                     font=dict(color="#94A3B8"),
                     yaxis=dict(range=[0, 1.05]),
-                    margin=dict(l=20, r=20, t=40, b=20),
-                    transition={'duration': 650, 'easing': 'cubic-in-out'},
-                    uirevision="dyn_leaderboard_bars"
+                    margin=dict(l=20, r=20, t=40, b=20)
                 )
                 st.plotly_chart(fig_bar, use_container_width=True)
 
@@ -833,9 +937,16 @@ if mode == "📤 Upload Custom Dataset / Database":
             # -----------------------------------------------------------------
             with d_tab_cluster:
                 st.markdown("### 👥 Unsupervised K-Means Behavioral Clustering & Dimensionality Reduction")
-                st.write(
-                    "Customer segmentation assigns accounts into distinct behavioral clusters based on similarity in normalized feature space."
-                )
+                st.markdown("""
+                    <div class="explanation-box">
+                        <div class="explanation-title">💡 What does Clustering & 3D PCA mean? (Plain English)</div>
+                        <div>
+                            • <b>Customer Tribes (K-Means):</b> Instead of treating everyone the same, the AI automatically divided your customers into behavioral tribes based on shared patterns (spend, loyalty, habits).<br>
+                            • <b>3D PCA Coordinates:</b> Real customer data has dozens of columns. PCA compresses them into visual 3D space so you can literally see separate customer tribes clumped together.<br>
+                            • <b>Action:</b> Look at the cluster cards above to see which tribe has the highest churn rate, then target retention offers specifically to them.
+                        </div>
+                    </div>
+                """, unsafe_allow_html=True)
 
                 # Cluster Cards
                 cluster_cols = st.columns(len(engine.cluster_profiles))
@@ -856,20 +967,6 @@ if mode == "📤 Upload Custom Dataset / Database":
                 with p3d_col:
                     st.markdown("#### 🌐 Interactive 3D PCA Projection")
                     if engine.scored_df is not None and "PCA_Dim3" in engine.scored_df.columns:
-                        # 3D Camera flight & orbit controller
-                        cam_preset = st.radio(
-                            "3D Camera Motion & Perspective Flight",
-                            options=["🚀 Isometric Orbit", "🎯 Top-Down Plane", "📐 Frontal Horizon", "🔍 Deep Side Angle"],
-                            index=0,
-                            horizontal=True,
-                            key="dyn_pca_camera_preset"
-                        )
-                        camera_dict = {
-                            "🚀 Isometric Orbit": dict(eye=dict(x=1.55, y=1.55, z=1.25)),
-                            "🎯 Top-Down Plane": dict(eye=dict(x=0.01, y=0.01, z=2.45)),
-                            "📐 Frontal Horizon": dict(eye=dict(x=2.2, y=0.1, z=0.35)),
-                            "🔍 Deep Side Angle": dict(eye=dict(x=0.2, y=2.2, z=0.5))
-                        }
                         fig_pca3 = px.scatter_3d(
                             engine.scored_df.head(1500),
                             x="PCA_Dim1", y="PCA_Dim2", z="PCA_Dim3",
@@ -881,15 +978,7 @@ if mode == "📤 Upload Custom Dataset / Database":
                             paper_bgcolor="rgba(0,0,0,0)",
                             font=dict(color="#94A3B8"),
                             margin=dict(l=10, r=10, t=10, b=10),
-                            height=480,
-                            scene=dict(
-                                camera=camera_dict[cam_preset],
-                                xaxis=dict(backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.08)"),
-                                yaxis=dict(backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.08)"),
-                                zaxis=dict(backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.08)")
-                            ),
-                            transition={"duration": 750, "easing": "cubic-in-out"},
-                            uirevision="dyn_pca_3d_state"
+                            height=480
                         )
                         st.plotly_chart(fig_pca3, use_container_width=True)
                     else:
@@ -935,9 +1024,15 @@ if mode == "📤 Upload Custom Dataset / Database":
             # -----------------------------------------------------------------
             with d_tab_anomaly:
                 st.markdown("### 🕵️ Anomaly Account Detection (Isolation Forest)")
-                st.write(
-                    "Isolation Forest isolates outliers by randomly partitioning feature trees. Accounts requiring few splits are flagged as anomalies."
-                )
+                st.markdown("""
+                    <div class="explanation-box">
+                        <div class="explanation-title">💡 What are Anomalies and Outliers? (Plain English)</div>
+                        <div>
+                            • <b>Unusual Accounts:</b> Isolation Forest spots customers who behave totally differently from your typical customer base (e.g. unusually giant bills, extreme service combinations, or irregular usage).<br>
+                            • <b>Why find them?</b> These are often VIP accounts that need personalized white-glove treatment, accounts with billing errors, or accounts at sudden risk of unexpected cancellation.
+                        </div>
+                    </div>
+                """, unsafe_allow_html=True)
 
                 scored = engine.scored_df
                 if scored is not None:
@@ -991,9 +1086,16 @@ if mode == "📤 Upload Custom Dataset / Database":
             # -----------------------------------------------------------------
             with d_tab_predict:
                 st.markdown("### 🎯 Single-Account Prediction Simulator & Portfolio Batch Export")
-                st.write(
-                    "Simulate predictions on interactive profile inputs or export the entire scored dataset with predicted labels, probabilities, and clusters."
-                )
+                st.markdown("""
+                    <div class="explanation-box">
+                        <div class="explanation-title">💡 How to Use the Simulator? (Plain English)</div>
+                        <div>
+                            • Adjust the customer profile sliders and dropdowns below, then click <b>Predict Individual Outcome</b>.<br>
+                            • The speedometer gauge reveals their probability of leaving (<b>Green = Loyal</b>, <b>Yellow = Warning</b>, <b>Red = High Danger</b>).<br>
+                            • Scroll down to export the entire customer database with AI risk labels and cluster tags pre-computed for every row!
+                        </div>
+                    </div>
+                """, unsafe_allow_html=True)
 
                 # Real-Time Predictor Form
                 st.markdown("#### ⚡ Real-Time Customer Profile Simulator")
@@ -1209,7 +1311,18 @@ else:
                 </div>
             """, unsafe_allow_html=True)
 
-        st.markdown("<div style='height: 24px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+
+        st.markdown("""
+            <div class="explanation-box">
+                <div class="explanation-title">💡 Executive Summary & Portfolio Health (Plain English)</div>
+                <div>
+                    • <b>Churn Rate (26.6%):</b> Roughly 1 out of every 4 customers has left the service. That totals <b>1,869 lost customers</b> and leaves <b>~$121,000 in monthly recurring revenue (MRR)</b> exposed to loss.<br>
+                    • <b>Contract Duration Effect:</b> Examine the left chart below — customers on <b>Month-to-month contracts churn at ~43%</b>, while customers on <b>1-Year and 2-Year contracts churn at under 12% and 3%</b>. Securing longer commitments is your single most effective defense against churn!<br>
+                    • <b>Internet Service:</b> Fiber optic subscribers have the highest churn rate (~42%), signaling high customer expectations, pricing sensitivity, or early onboarding friction.
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
 
         if dataset_df is not None:
             c1, c2 = st.columns([1, 1])
@@ -1264,28 +1377,18 @@ else:
     # -------------------------------------------------------------------------
     with tab_violin:
         st.markdown("### 🎻 Violin Distribution Analytics (IBM Telco Customer Portfolio)")
-        st.write(
-            "Violin plots visualize feature probability density curves together with embedded box plots to reveal distribution skewness between churned and retained subscribers."
-        )
+        st.markdown("""
+            <div class="explanation-box">
+                <div class="explanation-title">💡 How to Read Violin Plots (Plain English)</div>
+                <div>
+                    • <b>What is a Violin Plot?</b> It maps where customers concentrate. The fatter/wider the violin shape at any height, the higher the density of customers at that tenure or dollar amount.<br>
+                    • <b>The Inner Box:</b> The center box shows the middle 50% group of customers, with the white dot or line indicating the median typical customer.<br>
+                    • <b>Key Insight:</b> Notice the red violin for churned customers — it bulges heavily at tenure 1–6 months, revealing that subscribers who leave almost always do so very early!
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
 
         if dataset_df is not None:
-            # Interactive Point Jitter & Display Controls
-            t_col_c1, t_col_c2 = st.columns([2, 1])
-            with t_col_c1:
-                t_point_mode = st.radio(
-                    "Points & Jitter Visualization Mode",
-                    options=["✨ Animated Jitter Points (All)", "🎯 Outliers Only", "🌊 Smooth Density (No Points)"],
-                    index=0,
-                    horizontal=True,
-                    key="telco_violin_jitter_mode"
-                )
-            with t_col_c2:
-                t_box_overlay = st.checkbox("Overlay Boxplot Quartiles", value=True, key="telco_violin_box")
-
-            t_points_arg = "all" if "All" in t_point_mode else ("outliers" if "Outliers" in t_point_mode else False)
-            t_jitter_arg = 0.55 if t_points_arg == "all" else 0.0
-            t_pointpos_arg = -0.35 if t_points_arg == "all" else 0.0
-
             v_col1, v_col2 = st.columns([1, 1])
             with v_col1:
                 sel_telco_v = st.selectbox(
@@ -1299,12 +1402,10 @@ else:
                     y=sel_telco_v,
                     x="Churn",
                     color="Churn",
-                    box=t_box_overlay,
-                    points=t_points_arg,
+                    box=True,
+                    points="outliers",
                     color_discrete_map={"No": "#10B981", "Yes": "#EF4444"}
                 )
-                if t_points_arg == "all":
-                    fig_v_telco.update_traces(jitter=t_jitter_arg, pointpos=t_pointpos_arg, marker=dict(size=4.5, opacity=0.75))
                 fig_v_telco.update_layout(
                     title=f"Distribution of {sel_telco_v} by Churn Status",
                     paper_bgcolor="rgba(0,0,0,0)",
@@ -1328,12 +1429,10 @@ else:
                     y=sel_telco_v2,
                     x="Contract",
                     color="Contract",
-                    box=t_box_overlay,
-                    points=t_points_arg,
+                    box=True,
+                    points="outliers",
                     color_discrete_sequence=["#6366F1", "#EC4899", "#38BDF8"]
                 )
-                if t_points_arg == "all":
-                    fig_v_contract.update_traces(jitter=t_jitter_arg, pointpos=t_pointpos_arg, marker=dict(size=4.5, opacity=0.75))
                 fig_v_contract.update_layout(
                     title=f"Distribution of {sel_telco_v2} by Contract Duration",
                     paper_bgcolor="rgba(0,0,0,0)",
@@ -1350,7 +1449,16 @@ else:
     # -------------------------------------------------------------------------
     with tab_predict:
         st.markdown("### 🎯 Real-Time Individual Customer Risk Scoring & Prescriptive Retention")
-        st.write("Configure the customer profile below or pick an instant preset to run inference and view customized retention tactics.")
+        st.markdown("""
+            <div class="explanation-box">
+                <div class="explanation-title">💡 How to Use the Simulator (Plain English)</div>
+                <div>
+                    • <b>Quick Presets:</b> Click any preset button below (like <i>🚨 Load High-Risk Profile</i> or <i>🛡️ Load Loyal Customer</i>) to auto-fill customer traits.<br>
+                    • <b>Speedometer Gauge:</b> <b>Green (0–35%)</b> means safe & loyal, <b>Yellow (35–65%)</b> means moderate risk, and <b>Red (65–100%)</b> means high danger of leaving.<br>
+                    • <b>Prescriptive Retention Playbook:</b> On the right, the AI recommends specific tactical business offers (e.g., contract upgrade incentives or tech support) tailored to save this specific customer.
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
 
         p_col1, p_col2, p_col3, p_col4 = st.columns([1, 1, 1, 2])
         with p_col1:
@@ -1501,6 +1609,16 @@ else:
     # -------------------------------------------------------------------------
     with tab_clustering:
         st.markdown("### 👥 Customer Segmentation (K-Means Clustering)")
+        st.markdown("""
+            <div class="explanation-box">
+                <div class="explanation-title">💡 Customer Tribes & 3D PCA Explained (Plain English)</div>
+                <div>
+                    • <b>What are Clusters?</b> The AI grouped all 7,035 customers into 3 behavioral tribes based on their contract type, tenure, and services.<br>
+                    • <b>Why 3D PCA?</b> Customers have 20 different attributes. PCA compresses them into 3 visual dimensions so you can literally see separate customer tribes clumped together.<br>
+                    • <b>Strategic Takeaway:</b> Focus retention offers on Cluster 2 (high churn rate), while treating Cluster 0 (loyal long-term) with loyalty reward programs.
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
         clusters = meta.get("cluster_profiles", {})
         
         c_cols = st.columns(3)
@@ -1525,19 +1643,6 @@ else:
             p3, p2 = st.columns([1, 1])
             with p3:
                 st.markdown("#### 🌐 3D PCA Projection")
-                telco_cam_preset = st.radio(
-                    "3D Camera Motion & Perspective Flight",
-                    options=["🚀 Isometric Orbit", "🎯 Top-Down Plane", "📐 Frontal Horizon", "🔍 Deep Side Angle"],
-                    index=0,
-                    horizontal=True,
-                    key="telco_pca_cam_preset"
-                )
-                t_camera_dict = {
-                    "🚀 Isometric Orbit": dict(eye=dict(x=1.55, y=1.55, z=1.25)),
-                    "🎯 Top-Down Plane": dict(eye=dict(x=0.01, y=0.01, z=2.45)),
-                    "📐 Frontal Horizon": dict(eye=dict(x=2.2, y=0.1, z=0.35)),
-                    "🔍 Deep Side Angle": dict(eye=dict(x=0.2, y=2.2, z=0.5))
-                }
                 fig_3d = px.scatter_3d(
                     viz_df, x="pc1", y="pc2", z="pc3",
                     color="Cluster_Name",
@@ -1549,13 +1654,11 @@ else:
                     font=dict(color="#94A3B8"),
                     height=480,
                     scene=dict(
-                        camera=t_camera_dict[telco_cam_preset],
                         xaxis=dict(backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.08)"),
                         yaxis=dict(backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.08)"),
                         zaxis=dict(backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.08)")
                     ),
-                    transition={"duration": 750, "easing": "cubic-in-out"},
-                    uirevision="telco_3d_pca_state"
+                    margin=dict(l=10, r=10, t=10, b=10)
                 )
                 st.plotly_chart(fig_3d, use_container_width=True)
 
@@ -1582,36 +1685,78 @@ else:
     # -------------------------------------------------------------------------
     with tab_anomaly:
         st.markdown("### 🕵️ Anomaly Account Detection (Isolation Forest)")
+        st.markdown("""
+            <div class="explanation-box">
+                <div class="explanation-title">💡 What are Anomaly Accounts? (Plain English)</div>
+                <div>
+                    • <b>Unusual Accounts:</b> Isolation Forest spots customers who behave totally differently from your typical customer base (e.g., unusually high monthly bills, extreme service combinations, or irregular tenure).<br>
+                    • <b>Why find them?</b> These are often VIP accounts that deserve special high-touch customer support, accounts with potential billing errors, or subscribers at sudden risk of unexpected cancellation.<br>
+                    • <b>The Visual:</b> In the PCA chart on the right, red dots mark outlier accounts pushed to the edges of the feature landscape.
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
         anom_count = meta.get("anomaly_count", 211)
         total_s = meta.get("total_samples", 7035)
 
-        st.markdown(f"""
-            <div class="metric-card" style="max-width: 400px;">
-                <div class="metric-title">Flagged Outlier Accounts</div>
-                <div class="metric-value" style="color: #EF4444;">{anom_count:,}</div>
-                <div class="metric-sub">{anom_count / total_s * 100:.1f}% contamination threshold</div>
-            </div>
-        """, unsafe_allow_html=True)
+        a_col1, a_col2 = st.columns([1, 2])
+        with a_col1:
+            st.markdown(f"""
+                <div class="metric-card">
+                    <div class="metric-title">Flagged Outlier Accounts</div>
+                    <div class="metric-value" style="color: #EF4444;">{anom_count:,}</div>
+                    <div class="metric-sub">{anom_count / total_s * 100:.1f}% contamination threshold</div>
+                </div>
+            """, unsafe_allow_html=True)
+            st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+            st.markdown(f"""
+                <div class="metric-card">
+                    <div class="metric-title">Normal Portfolio Baseline</div>
+                    <div class="metric-value" style="color: #10B981;">{total_s - anom_count:,}</div>
+                    <div class="metric-sub">{100 - (anom_count / total_s * 100):.1f}% regular account behavior</div>
+                </div>
+            """, unsafe_allow_html=True)
+
+        with a_col2:
+            viz = meta.get("viz_data", {})
+            if viz and "anomaly" in viz:
+                anom_df = pd.DataFrame(viz)
+                anom_df["Status"] = anom_df["anomaly"].map({-1: "Anomaly (Outlier)", 1: "Normal Baseline"})
+                fig_anom_telco = px.scatter(
+                    anom_df, x="pc1", y="pc2", color="Status",
+                    color_discrete_map={"Normal Baseline": "#38BDF8", "Anomaly (Outlier)": "#EF4444"},
+                    hover_data=["tenure", "monthly_charges"],
+                    title="PCA Projection: Normal Accounts vs Anomalous Outliers"
+                )
+                fig_anom_telco.update_layout(
+                    paper_bgcolor="rgba(0,0,0,0)",
+                    plot_bgcolor="rgba(0,0,0,0)",
+                    font=dict(color="#94A3B8"),
+                    margin=dict(l=20, r=20, t=40, b=20),
+                    height=360
+                )
+                st.plotly_chart(fig_anom_telco, use_container_width=True)
 
     # -------------------------------------------------------------------------
     # TELCO TAB 6: MODEL BENCHMARK LEADERBOARD
     # -------------------------------------------------------------------------
     with tab_benchmark:
         st.markdown("### 📈 Supervised Machine Learning Benchmark Leaderboard")
+        st.markdown("""
+            <div class="explanation-box">
+                <div class="explanation-title">💡 How to Read Model Scores (Plain English)</div>
+                <div>
+                    • <b>Accuracy:</b> The overall score — what percentage of all customer predictions (both churn and stay) were correct?<br>
+                    • <b>Precision (Few False Alarms):</b> When the AI predicts a customer will leave, how often is it right? High precision ensures you don't offer unnecessary discounts to happy customers.<br>
+                    • <b>Recall (Catching Everyone):</b> Out of all customers who actually left, how many did the AI successfully catch? High recall prevents customers from slipping away unnoticed.<br>
+                    • <b>F1 Score:</b> The balanced master score between Precision and Recall. The model with the highest F1 Score is your best all-around performer!
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
         eval_df = pd.DataFrame(meta.get("evaluation_results", []))
-
-        # Dynamic metric sorting
-        tb_col, _ = st.columns([2, 1])
-        with tb_col:
-            t_sort_metric = st.radio(
-                "Sort Leaderboard & Comparison by Metric",
-                options=["F1_Score", "Accuracy", "Precision", "Recall", "ROC_AUC"],
-                index=0,
-                horizontal=True,
-                key="telco_bench_sort_metric"
-            )
-
-        eval_df = eval_df.sort_values(by=t_sort_metric, ascending=False).reset_index(drop=True)
+        if "F1_Score" in eval_df.columns:
+            eval_df = eval_df.sort_values(by="F1_Score", ascending=False).reset_index(drop=True)
 
         st.dataframe(
             eval_df.style.highlight_max(axis=0, subset=['Accuracy', 'Precision', 'Recall', 'F1_Score', 'ROC_AUC'], color="#6366F144").format({
@@ -1647,7 +1792,7 @@ else:
             }
         )
         fig_telco_bars.update_layout(
-            title=f"Multi-Metric Benchmark Comparison (Ranked by {t_sort_metric})",
+            title="Multi-Metric Benchmark Comparison (Accuracy vs Precision vs Recall vs F1 Score)",
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
             font=dict(color="#94A3B8"),
