@@ -14,23 +14,22 @@ Built on modular Object-Oriented Programming (OOP) principles and deployed with 
 
 ## 🌟 Key Platform Features
 
-- **📊 Executive KPI Dashboard**: Real-time revenue at risk, churn rate, retention ratio, customer tenure distributions, and multi-dimensional cross-tabulations.
-- **🎯 Real-Time Churn Prediction Engine**:
-  - Interactive profile simulator with 1-click presets (*High-Risk*, *Loyal*, *Typical*).
-  - Multi-model scoring: Pick between 6 trained classifiers (Logistic Regression, Random Forest, SVM, Decision Tree, KNN, Naive Bayes).
-  - Risk gauge with calibrated confidence intervals & color-coded urgency tiers.
-  - **Prescriptive Retention Playbook**: Automated, context-aware retention tactics based on specific contract, payment, and service features.
-- **📁 Batch CSV Scoring**: Upload customer portfolio datasets and export scored predictions with churn risk probabilities.
-- **👥 Unsupervised Customer Segmentation (K-Means)**:
-  - 3 distinct behavioral customer clusters with personas: *Core Long-Term Subscribers*, *New / Month-to-Month Budget*, *High-Value At-Risk Streamers*.
-  - Interactive 2D & 3D PCA dimensional projections with zoom, rotate, and hover tooltips.
-- **🕵️ Anomaly Account Detection (Isolation Forest)**:
-  - Automated detection of outlier accounts with unusual billing patterns or atypical service bundles (3% contamination threshold).
-- **📈 Model Benchmark & Interpretability**:
-  - Full evaluation leaderboard comparing Accuracy, Precision, Recall, F1 Score, and ROC-AUC.
-  - Interactive ROC curves for all models.
-  - Gini Feature Importance rankings highlighting top churn drivers (tenure, contract type, fiber optic service, payment method).
+- **⚡ Dynamic Dataset Ingestion & AutoML Studio**: Upload **any custom tabular database (CSV, Excel, TSV)** or use the built-in sample generator. The system auto-detects targets, cleans missing data, trains 6 classifiers, and generates full visual reports.
+- **🎻 Multi-Dimensional Violin & Distribution Plots**: Interactive violin density plots with embedded box plots to visualize multimodal feature distributions across target classes and K-Means clusters.
+- **📈 Comprehensive Precision, Recall, F1 & Benchmark Leaderboard**:
+  - Full evaluation leaderboard comparing Accuracy, Precision, Recall, F1 Score, and ROC-AUC across 6 classifiers.
+  - Interactive ROC curves with AUC scores.
   - Interactive confusion matrix heatmaps.
+  - Gini Feature Importance rankings highlighting top drivers.
+- **👥 Dynamic K-Means Clustering with 2D & 3D PCA**:
+  - Unsupervised behavioral clustering with customizable K (2 to 8 clusters).
+  - Interactive 3D and 2D PCA dimensional scatter projections with zoom, rotate, and hover tooltips.
+- **🕵️ Anomaly Account Detection (Isolation Forest)**:
+  - Automated detection of outlier accounts with unusual feature combinations (customizable contamination threshold).
+- **🎯 Dual Intelligence Modes**:
+  - **Dynamic Studio**: Upload and analyze any custom dataset.
+  - **Pre-Trained IBM Telco Suite**: Instant access to pre-trained classifiers, high-risk presets, and prescriptive retention playbook.
+- **📥 Full Scored Dataset Export**: Download predictions, probabilities, cluster tags, and anomaly flags as CSV.
 
 ---
 
@@ -76,12 +75,14 @@ All models were evaluated using an 80/20 stratified split, continuous IQR outlie
 ├── src/
 │   ├── __init__.py
 │   ├── data_processor.py            # OOP DataProcessor (IQR capping, encoding, cleaning)
+│   ├── dynamic_engine.py            # Dynamic AutoML, clustering & visual analytics engine
 │   ├── model_pipeline.py            # Training pipeline & evaluation engine
 │   └── utils.py                     # Risk tier evaluator & prescriptive retention logic
 ├── tests/
 │   ├── __init__.py
 │   ├── conftest.py                  # Pytest fixtures & sample customer profiles
 │   ├── test_data_processor.py       # Data cleaning, encoding & feature prep tests
+│   ├── test_dynamic_engine.py       # Dynamic AutoML engine unit tests
 │   ├── test_model_pipeline.py       # Model loading, inference & metric validation
 │   └── test_utils.py                # Risk tiering & prescriptive playbook tests
 ├── app.py                           # Streamlit Web Application
