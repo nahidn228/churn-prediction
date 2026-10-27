@@ -1,3 +1,4 @@
+Set-Location -LiteralPath $PSScriptRoot
 Write-Host "================================================================" -ForegroundColor Cyan
 Write-Host "  Launching Customer Segmentation & Churn Intelligence Engine   " -ForegroundColor Cyan
 Write-Host "================================================================" -ForegroundColor Cyan

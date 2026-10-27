@@ -1,4 +1,5 @@
 import os
+import sys
 import io
 import json
 import joblib
@@ -7,6 +8,11 @@ import numpy as np
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
+
+# Ensure workspace root is always at the head of Python search path
+_BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if _BASE_DIR not in sys.path:
+    sys.path.insert(0, _BASE_DIR)
 
 from src.data_processor import DataProcessor
 from src.utils import evaluate_risk_level, generate_retention_strategy
@@ -441,17 +447,18 @@ if mode == "📤 Upload Custom Dataset / Database":
                             index=0
                         )
                         # Plotly Violin by Target
+                        target_col_to_plot = engine.target_col if engine.target_col and engine.target_col in engine.clean_df.columns else selected_target
                         fig_violin_target = px.violin(
                             engine.clean_df,
                             y=sel_violin_feat,
-                            x=selected_target,
-                            color=selected_target,
+                            x=target_col_to_plot,
+                            color=target_col_to_plot,
                             box=True,
                             points="outliers",
                             color_discrete_sequence=["#10B981", "#EF4444", "#38BDF8", "#F59E0B"]
                         )
                         fig_violin_target.update_layout(
-                            title=f"Feature Distribution: {sel_violin_feat} by {selected_target}",
+                            title=f"Feature Distribution: {sel_violin_feat} by {target_col_to_plot}",
                             paper_bgcolor="rgba(0,0,0,0)",
                             plot_bgcolor="rgba(0,0,0,0)",
                             font=dict(color="#94A3B8"),
@@ -790,6 +797,9 @@ if mode == "📤 Upload Custom Dataset / Database":
                             min_val = float(engine.clean_df[ncol].min())
                             max_val = float(engine.clean_df[ncol].max())
                             mean_val = float(engine.clean_df[ncol].median())
+                            if min_val >= max_val:
+                                max_val = min_val + 1.0
+                            mean_val = min(max_val, max(min_val, mean_val))
                             sim_inputs[ncol] = st.slider(f"{ncol}", min_value=min_val, max_value=max_val, value=mean_val)
                         col_idx += 1
 
@@ -805,9 +815,9 @@ if mode == "📤 Upload Custom Dataset / Database":
                 if submit_sim:
                     # Construct single-row DataFrame
                     sim_row = pd.DataFrame([sim_inputs])
-                    # Encode matching engine feature space
+                    # Encode matching engine feature space with drop_first=False
                     if engine.categorical_cols:
-                        sim_encoded = pd.get_dummies(sim_row, columns=[c for c in engine.categorical_cols if c in sim_row.columns], drop_first=True, dtype=int)
+                        sim_encoded = pd.get_dummies(sim_row, columns=[c for c in engine.categorical_cols if c in sim_row.columns], drop_first=False, dtype=int)
                     else:
                         sim_encoded = sim_row.copy()
                     
@@ -816,6 +826,10 @@ if mode == "📤 Upload Custom Dataset / Database":
                     for col in engine.encoded_feature_names:
                         if col in sim_encoded.columns:
                             aligned[col] = sim_encoded[col]
+                        elif col in sim_row.columns:
+                            aligned[col] = pd.to_numeric(sim_row[col], errors='coerce').fillna(0)
+                        else:
+                            aligned[col] = 0
 
                     # Scale
                     aligned_scaled = engine.scaler.transform(aligned)

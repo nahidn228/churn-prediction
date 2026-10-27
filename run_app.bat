@@ -1,4 +1,5 @@
 @echo off
+cd /d "%~dp0"
 echo ================================================================
 echo   Launching Customer Segmentation & Churn Intelligence Engine
 echo ================================================================
