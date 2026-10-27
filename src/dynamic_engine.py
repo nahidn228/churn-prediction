@@ -72,7 +72,8 @@ class DynamicDataEngine:
         df = self.raw_df
         total_rows = len(df)
         id_candidates = []
-        target_candidates = []
+        target_name_matches = []
+        binary_candidates = []
         numeric_candidates = []
         categorical_candidates = []
 
@@ -95,12 +96,12 @@ class DynamicDataEngine:
                 id_candidates.append(col)
                 continue
 
-            # Check target candidates (binary or small categorical, matching name)
+            # Check target candidates (prioritize exact name matches)
             if target_patterns.search(col_str):
-                target_candidates.append(col)
+                target_name_matches.append(col)
             elif num_unique == 2:
                 # Binary column could be target
-                target_candidates.append(col)
+                binary_candidates.append(col)
 
             # Check numeric vs categorical
             # Try converting to numeric if string
@@ -114,10 +115,11 @@ class DynamicDataEngine:
                 if non_null_ratio > 0.8 and num_unique > 10:
                     numeric_candidates.append(col)
                 else:
-                    if col not in id_candidates and col not in target_candidates:
+                    if col not in id_candidates and not target_patterns.search(col_str):
                         categorical_candidates.append(col)
 
-        # Default suggested target
+        # Name matches are prioritized over generic binary columns
+        target_candidates = target_name_matches + [c for c in binary_candidates if c not in target_name_matches]
         suggested_target = target_candidates[0] if target_candidates else (
             df.columns[-1] if len(df.columns) > 1 else None
         )
@@ -241,7 +243,11 @@ class DynamicDataEngine:
 
         self.encoded_feature_names = X_encoded.columns.tolist()
         self.X_encoded = X_encoded
-        self.clean_df = df
+
+        # Cleaned dataframe containing properly typed and imputed continuous features plus target
+        clean_df = X.copy()
+        clean_df[target_col] = df[target_col].values
+        self.clean_df = clean_df
 
         return {
             "total_samples": len(df),
@@ -411,9 +417,16 @@ class DynamicDataEngine:
             num_means = {}
             for ncol in self.numeric_cols[:6]:  # top continuous features
                 if ncol in sub_raw.columns:
-                    num_means[ncol] = round(float(sub_raw[ncol].mean()), 2)
+                    series_num = pd.to_numeric(sub_raw[ncol], errors='coerce')
+                    mean_val = series_num.mean()
+                    if not pd.isna(mean_val):
+                        num_means[ncol] = round(float(mean_val), 2)
 
-            target_pos_rate = round(float((self.y_clean[c_mask] == 1).mean() * 100), 1) if self.y_clean is not None else 0.0
+            if self.y_clean is not None:
+                pos_mask = (self.y_clean[c_mask] == 1)
+                target_pos_rate = round(float(pos_mask.mean() * 100), 1) if len(pos_mask) > 0 else 0.0
+            else:
+                target_pos_rate = 0.0
 
             profiles[c] = {
                 "label": f"Cluster {c}",
