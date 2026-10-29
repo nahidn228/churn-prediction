@@ -142,10 +142,30 @@ python train.py
 ```
 
 ### 5. Launch the Web Application
+
+#### Standard Command:
 ```bash
 streamlit run app.py
+# or
+python -m streamlit run app.py
 ```
 Open your browser at `http://localhost:8501`.
+
+#### Using Pre-configured Quick-Launch Scripts:
+If `streamlit` or `python` is not in your system `PATH`:
+- **Git Bash**:
+  ```bash
+  ./run_app.sh
+  ```
+- **PowerShell**:
+  ```powershell
+  .\run_app.ps1
+  ```
+- **Windows File Explorer / CMD**:
+  Double-click `run_app.bat`.
+
+> **Troubleshooting (`streamlit: command not found`):**  
+> If your terminal cannot find `streamlit`, run using your Python executable directly (e.g. `/c/Users/BLG/AppData/Local/Python/bin/python.exe -m streamlit run app.py`) or add Python and `Scripts\` to your Windows Environment Variables under `Path`.
 
 ### 6. Run Automated Tests
 Execute the unit and integration test suite:
@@ -154,6 +174,23 @@ pytest -v
 # or
 python run_tests.py
 ```
+
+### 7. Applying Changes to Public Links (Streamlit Cloud & Hugging Face)
+
+When you update code or models and want the changes reflected on your public link:
+
+```bash
+# 1. Stage and commit your changes
+git add .
+git commit -m "Describe your updates"
+
+# 2. Update Streamlit Community Cloud (via GitHub)
+git push origin main
+
+# 3. Update Hugging Face Spaces
+git push space main
+```
+> **Note:** Always ensure any newly installed dependencies are added to `requirements.txt` before pushing so the cloud server builds successfully.
 
 ---
 

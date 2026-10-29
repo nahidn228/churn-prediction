@@ -113,6 +113,36 @@ st.markdown("""
         -webkit-text-fill-color: transparent;
         animation: gradientShift 8s ease-in-out infinite;
         margin-bottom: 4px;
+        font-size: clamp(1.4rem, 3.2vw, 2.25rem) !important;
+        line-height: 1.25 !important;
+        word-break: break-word;
+    }
+
+    /* Responsive Flex Header Container */
+    .responsive-header {
+        display: flex;
+        align-items: center;
+        gap: clamp(12px, 2.5vw, 22px);
+        margin-bottom: clamp(12px, 2vw, 20px);
+        flex-wrap: wrap;
+    }
+    .header-logo {
+        font-size: clamp(2.5rem, 5vw, 3.6rem);
+        flex-shrink: 0;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .header-content {
+        flex: 1 1 320px;
+        min-width: 0;
+    }
+    .header-subtitle {
+        color: #94A3B8;
+        font-size: clamp(0.85rem, 1.8vw, 1.02rem);
+        margin: 0;
+        line-height: 1.5;
     }
 
     /* Floating Logo */
@@ -134,18 +164,21 @@ st.markdown("""
         vertical-align: middle;
     }
 
-    /* Metric Card Styling with Motion & Glow */
+    /* Metric Card Styling with Motion, Glow & Responsive Fluid Sizing */
     .metric-card {
         background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
         border: 1px solid rgba(255, 255, 255, 0.09);
         border-radius: 16px;
-        padding: 18px 22px;
+        padding: clamp(14px, 2vw, 20px) clamp(14px, 2.2vw, 22px);
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
         backdrop-filter: blur(10px);
         position: relative;
         overflow: hidden;
         transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.32s ease, border-color 0.32s ease;
         animation: fadeInUp 0.45s ease-out forwards;
+        box-sizing: border-box;
+        min-width: 0;
+        word-break: break-word;
     }
     .metric-card::before {
         content: '';
@@ -165,20 +198,21 @@ st.markdown("""
     }
     .metric-title {
         color: #94A3B8;
-        font-size: 0.8rem;
+        font-size: clamp(0.7rem, 1.6vw, 0.8rem);
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         margin-bottom: 6px;
+        line-height: 1.3;
     }
     .metric-value {
-        font-size: 1.85rem;
+        font-size: clamp(1.25rem, 3vw, 1.85rem);
         font-weight: 700;
         color: #F8FAFC;
-        line-height: 1.1;
+        line-height: 1.15;
     }
     .metric-sub {
-        font-size: 0.78rem;
+        font-size: clamp(0.7rem, 1.5vw, 0.78rem);
         color: #64748B;
         margin-top: 6px;
     }
@@ -188,10 +222,11 @@ st.markdown("""
         background: rgba(30, 41, 59, 0.55);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 16px;
-        padding: 22px;
+        padding: clamp(16px, 3vw, 24px);
         margin-bottom: 20px;
         backdrop-filter: blur(8px);
         animation: fadeInUp 0.45s ease-out forwards;
+        box-sizing: border-box;
     }
 
     /* Strategy Recommendation Card */
@@ -199,10 +234,11 @@ st.markdown("""
         background: rgba(15, 23, 42, 0.65);
         border-left: 4px solid #6366F1;
         border-radius: 0 12px 12px 0;
-        padding: 14px 18px;
+        padding: clamp(10px, 2vw, 14px) clamp(12px, 2.5vw, 18px);
         margin-bottom: 12px;
         transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-left-color 0.25s ease, background 0.25s ease;
         animation: fadeInUp 0.4s ease-out forwards;
+        box-sizing: border-box;
     }
     .strategy-card:hover {
         transform: translateX(6px);
@@ -212,12 +248,12 @@ st.markdown("""
     .strategy-title {
         font-weight: 600;
         color: #E2E8F0;
-        font-size: 0.95rem;
+        font-size: clamp(0.85rem, 1.8vw, 0.95rem);
         margin-bottom: 4px;
     }
     .strategy-desc {
         color: #94A3B8;
-        font-size: 0.85rem;
+        font-size: clamp(0.78rem, 1.6vw, 0.85rem);
         line-height: 1.4;
     }
 
@@ -246,18 +282,19 @@ st.markdown("""
         background: rgba(15, 23, 42, 0.72);
         border-left: 4px solid #38BDF8;
         border-radius: 0 14px 14px 0;
-        padding: 16px 20px;
+        padding: clamp(12px, 2.5vw, 18px) clamp(14px, 3vw, 20px);
         margin: 12px 0 20px 0;
-        font-size: 0.88rem;
+        font-size: clamp(0.8rem, 1.8vw, 0.88rem);
         color: #CBD5E1;
         line-height: 1.6;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
         animation: fadeInUp 0.4s ease-out forwards;
+        box-sizing: border-box;
     }
     .explanation-title {
         font-weight: 700;
         color: #38BDF8;
-        font-size: 0.95rem;
+        font-size: clamp(0.88rem, 2vw, 0.95rem);
         margin-bottom: 8px;
         display: flex;
         align-items: center;
@@ -339,9 +376,10 @@ st.markdown("""
         background: rgba(15, 23, 42, 0.65);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 14px;
-        padding: 20px;
+        padding: clamp(14px, 2.5vw, 20px);
         text-align: left;
         transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+        box-sizing: border-box;
     }
     .welcome-step-card:hover {
         transform: translateY(-6px) scale(1.02);
@@ -363,19 +401,33 @@ st.markdown("""
         transform: scale(1.02);
     }
 
-    /* Streamlit Tab Customization & Smooth Transitions */
+    /* Streamlit Tab Customization & Touch-Swipeable Navigation */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
+        gap: 6px;
         background-color: rgba(15, 23, 42, 0.6);
-        padding: 6px 8px;
+        padding: 6px;
         border-radius: 14px;
         border: 1px solid rgba(255, 255, 255, 0.06);
+        overflow-x: auto !important;
+        flex-wrap: nowrap !important;
+        scrollbar-width: thin;
+        -webkit-overflow-scrolling: touch;
+    }
+    .stTabs [data-baseweb="tab-list"]::-webkit-scrollbar {
+        height: 4px;
+    }
+    .stTabs [data-baseweb="tab-list"]::-webkit-scrollbar-thumb {
+        background: rgba(99, 102, 241, 0.3);
+        border-radius: 4px;
     }
     .stTabs [data-baseweb="tab"] {
         border-radius: 10px;
-        padding: 8px 18px;
+        padding: 8px clamp(10px, 2vw, 18px);
         font-weight: 600;
         color: #94A3B8;
+        white-space: nowrap !important;
+        font-size: clamp(0.78rem, 1.8vw, 0.92rem) !important;
+        flex-shrink: 0 !important;
         transition: all 0.25s ease;
     }
     .stTabs [data-baseweb="tab"]:hover {
@@ -386,6 +438,189 @@ st.markdown("""
         background: linear-gradient(135deg, #6366F1, #4F46E5) !important;
         color: #FFFFFF !important;
         box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+    }
+
+    /* ------------------------------------------------------------- */
+    /* RESPONSIVE DESIGN & MEDIA QUERIES (Mobile, Tablet, Desktop)   */
+    /* ------------------------------------------------------------- */
+    
+    /* Viewport and Page-Level Reset to Prevent Horizontal Overflow */
+    html, body {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+    }
+    
+    .stApp, [data-testid="stAppViewContainer"], section.main {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+    }
+
+    *, *::before, *::after {
+        box-sizing: border-box !important;
+    }
+
+    /* Global Container Fluid Padding */
+    .block-container {
+        padding-top: clamp(1rem, 2.5vw, 2rem) !important;
+        padding-bottom: clamp(1.5rem, 3.5vw, 2.8rem) !important;
+        padding-left: clamp(0.6rem, 2.5vw, 2rem) !important;
+        padding-right: clamp(0.6rem, 2.5vw, 2rem) !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    /* Universal Column Row Container */
+    [data-testid="stHorizontalBlock"] {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 14px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Responsive DataFrames & Plots */
+    [data-testid="stDataFrame"], [data-testid="stTable"], .stDataFrame {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    .js-plotly-plot, .plot-container, .plotly {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Touch & Click Friendly Buttons & Controls */
+    button, select, input {
+        touch-action: manipulation;
+    }
+
+    /* --------------------------------------------------------- */
+    /* SCREEN BREAKPOINTS                                        */
+    /* --------------------------------------------------------- */
+
+    /* 1. Large Tablets & Small Laptops (width <= 1100px) */
+    @media screen and (max-width: 1100px) {
+        section.main [data-testid="stHorizontalBlock"] > div,
+        section.main [data-testid="stHorizontalBlock"] > [data-testid="column"],
+        [data-testid="stAppViewContainer"] section:not([data-testid="stSidebar"]) [data-testid="stHorizontalBlock"] > div {
+            min-width: calc(33.333% - 14px) !important;
+            max-width: 100% !important;
+            width: calc(33.333% - 14px) !important;
+            flex: 1 1 calc(33.333% - 14px) !important;
+            margin-bottom: 8px !important;
+        }
+    }
+
+    /* 2. Standard Tablets & Large Phones in Landscape (width <= 820px) */
+    @media screen and (max-width: 820px) {
+        section.main [data-testid="stHorizontalBlock"] > div,
+        section.main [data-testid="stHorizontalBlock"] > [data-testid="column"],
+        [data-testid="stAppViewContainer"] section:not([data-testid="stSidebar"]) [data-testid="stHorizontalBlock"] > div {
+            min-width: calc(50% - 14px) !important;
+            max-width: 100% !important;
+            width: calc(50% - 14px) !important;
+            flex: 1 1 calc(50% - 14px) !important;
+            margin-bottom: 10px !important;
+        }
+
+        .metric-title {
+            font-size: 0.72rem !important;
+        }
+        .metric-value {
+            font-size: 1.45rem !important;
+        }
+    }
+
+    /* 3. Mobile Phones (width <= 600px) */
+    @media screen and (max-width: 600px) {
+        /* All content columns stack vertically at full width */
+        section.main [data-testid="stHorizontalBlock"] > div,
+        section.main [data-testid="stHorizontalBlock"] > [data-testid="column"],
+        [data-testid="stAppViewContainer"] section:not([data-testid="stSidebar"]) [data-testid="stHorizontalBlock"] > div {
+            min-width: 100% !important;
+            max-width: 100% !important;
+            width: 100% !important;
+            flex: 1 1 100% !important;
+            margin-bottom: 12px !important;
+        }
+
+        /* Responsive Header on Mobile */
+        .responsive-header {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 8px !important;
+            margin-bottom: 14px !important;
+        }
+        .header-content {
+            text-align: center !important;
+        }
+        .animated-gradient-title {
+            font-size: 1.55rem !important;
+            line-height: 1.25 !important;
+        }
+        .header-subtitle {
+            font-size: 0.88rem !important;
+        }
+
+        /* Metric cards spacing on phone */
+        .metric-card {
+            padding: 14px 16px !important;
+            margin-bottom: 8px !important;
+        }
+        .metric-title {
+            font-size: 0.75rem !important;
+        }
+        .metric-value {
+            font-size: 1.5rem !important;
+        }
+        .metric-sub {
+            font-size: 0.72rem !important;
+        }
+
+        /* Plain-English explanation box */
+        .explanation-box {
+            padding: 12px 14px !important;
+            font-size: 0.82rem !important;
+            line-height: 1.5 !important;
+        }
+
+        /* Tabs on mobile */
+        .stTabs [data-baseweb="tab"] {
+            padding: 6px 12px !important;
+            font-size: 0.78rem !important;
+        }
+    }
+
+    /* 4. Ultra-Compact Phones (e.g. iPhone SE / Galaxy Fold width <= 380px) */
+    @media screen and (max-width: 380px) {
+        .block-container {
+            padding-left: 0.4rem !important;
+            padding-right: 0.4rem !important;
+        }
+        .animated-gradient-title {
+            font-size: 1.35rem !important;
+        }
+        .metric-value {
+            font-size: 1.3rem !important;
+        }
+    }
+
+    /* Keep Sidebar Buttons Side-by-Side on all screen sizes */
+    [data-testid="stSidebar"] [data-testid="stHorizontalBlock"] {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stHorizontalBlock"] > div,
+    [data-testid="stSidebar"] [data-testid="stHorizontalBlock"] > [data-testid="column"] {
+        min-width: 0 !important;
+        width: 50% !important;
+        flex: 1 1 50% !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -510,50 +745,51 @@ if mode == "📤 Upload Custom Dataset / Database":
         except Exception as e:
             st.sidebar.error(f"Error reading file: {e}")
 
-    # Header Section
-    col_logo, col_head = st.columns([1, 8])
-    with col_logo:
-        st.markdown("<div class='floating-logo' style='font-size: 3.4rem; text-align: center;'>⚡</div>", unsafe_allow_html=True)
-    with col_head:
-        st.markdown("""
-            <div style='margin-bottom: 3px;'>
-                <span class='live-beacon'></span>
-                <span style='color: #38BDF8; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;'>
-                    AutoML • Motion Analytics Engine Active
-                </span>
+    # Header Section (Responsive Flex Layout)
+    st.markdown("""
+        <div class="responsive-header">
+            <div class="floating-logo header-logo">⚡</div>
+            <div class="header-content">
+                <div style="margin-bottom: 3px;">
+                    <span class="live-beacon"></span>
+                    <span style="color: #38BDF8; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">
+                        AutoML • Motion Analytics Engine Active
+                    </span>
+                </div>
+                <h1 class="animated-gradient-title">
+                    Dynamic AutoML, Visual Analytics & Clustering Engine
+                </h1>
+                <p class="header-subtitle">
+                    Upload any database to instantly train 6 classifiers, compute Precision, Recall, F1 score leaderboards, generate Violin distribution plots, and perform K-Means 3D clustering with smooth motion visualization.
+                </p>
             </div>
-            <h1 class='animated-gradient-title'>
-                Dynamic AutoML, Visual Analytics & Clustering Engine
-            </h1>
-            <p style='color: #94A3B8; font-size: 1.05rem; margin-top: 0;'>
-                Upload any database to instantly train 6 classifiers, compute Precision, Recall, F1 score leaderboards, generate Violin distribution plots, and perform K-Means 3D clustering with smooth motion visualization.
-            </p>
-        """, unsafe_allow_html=True)
+        </div>
+    """, unsafe_allow_html=True)
 
     if st.session_state["dynamic_raw_df"] is None:
         # Welcome & Instructions Banner with dynamic motion
         st.markdown("""
-            <div class="glass-panel animated-welcome-box" style="text-align: center; padding: 42px 28px; border: 2px dashed rgba(99, 102, 241, 0.45); border-radius: 20px;">
-                <div class="floating-logo" style="font-size: 4rem; margin-bottom: 12px;">📂</div>
-                <h2 style="color: #F8FAFC; margin-bottom: 8px; font-size: 1.8rem;">Upload Any Customer Database to Get Started</h2>
-                <p style="color: #94A3B8; max-width: 640px; margin: 0 auto 24px auto; font-size: 0.96rem; line-height: 1.5;">
+            <div class="glass-panel animated-welcome-box" style="text-align: center; padding: clamp(20px, 4vw, 38px) clamp(12px, 3vw, 24px); border: 2px dashed rgba(99, 102, 241, 0.45); border-radius: 20px; box-sizing: border-box; width: 100%;">
+                <div class="floating-logo" style="font-size: clamp(2.8rem, 6vw, 4rem); margin-bottom: 10px;">📂</div>
+                <h2 style="color: #F8FAFC; margin-bottom: 8px; font-size: clamp(1.25rem, 3.5vw, 1.8rem); line-height: 1.3;">Upload Any Customer Database to Get Started</h2>
+                <p style="color: #94A3B8; max-width: 640px; margin: 0 auto 20px auto; font-size: clamp(0.85rem, 2vw, 0.96rem); line-height: 1.5;">
                     Drop your CSV or Excel database to auto-detect columns, train 6 AI classifiers, compute Precision, Recall & F1 leaderboards, and map behavioral customer clusters in interactive 3D space.
                 </p>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; max-width: 780px; margin: 0 auto 24px auto;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; width: 100%; max-width: 780px; margin: 0 auto 20px auto; box-sizing: border-box;">
                     <div class="welcome-step-card">
-                        <div style="font-weight: 700; font-size: 1.05rem; color: #F8FAFC; margin-bottom: 4px;">📁 1. Ingest Data</div>
-                        <div style="font-size: 0.83rem; color: #94A3B8;">Upload any tabular file. The engine auto-cleans missing entries and encodes features.</div>
+                        <div style="font-weight: 700; font-size: 1rem; color: #F8FAFC; margin-bottom: 4px;">📁 1. Ingest Data</div>
+                        <div style="font-size: 0.82rem; color: #94A3B8; line-height: 1.4;">Upload any tabular file. The engine auto-cleans missing entries and encodes features.</div>
                     </div>
                     <div class="welcome-step-card">
-                        <div style="font-weight: 700; font-size: 1.05rem; color: #F8FAFC; margin-bottom: 4px;">🤖 2. AutoML Arena</div>
-                        <div style="font-size: 0.83rem; color: #94A3B8;">Automatically benchmarks 6 ML models with Precision, Recall, F1 and ROC curves.</div>
+                        <div style="font-weight: 700; font-size: 1rem; color: #F8FAFC; margin-bottom: 4px;">🤖 2. AutoML Arena</div>
+                        <div style="font-size: 0.82rem; color: #94A3B8; line-height: 1.4;">Automatically benchmarks 6 ML models with Precision, Recall, F1 and ROC curves.</div>
                     </div>
                     <div class="welcome-step-card">
-                        <div style="font-weight: 700; font-size: 1.05rem; color: #F8FAFC; margin-bottom: 4px;">👥 3. Visual Clusters</div>
-                        <div style="font-size: 0.83rem; color: #94A3B8;">Explore Violin distribution plots and interactive 3D K-Means customer tribes.</div>
+                        <div style="font-weight: 700; font-size: 1rem; color: #F8FAFC; margin-bottom: 4px;">👥 3. Visual Clusters</div>
+                        <div style="font-size: 0.82rem; color: #94A3B8; line-height: 1.4;">Explore Violin distribution plots and interactive 3D K-Means customer tribes.</div>
                     </div>
                 </div>
-                <div class="quick-test-pill">
+                <div class="quick-test-pill" style="max-width: 100%; word-break: break-word;">
                     💡 <b>Quick Test:</b> Click <b>'🎲 Sample Data'</b> in the left sidebar to explore an instant synthetic E-Commerce portfolio.
                 </div>
             </div>
@@ -1224,25 +1460,26 @@ else:
     meta = artifacts["metadata"]
     dataset_df = load_telco_dataset()
 
-    # Header Section
-    col_logo, col_head = st.columns([1, 8])
-    with col_logo:
-        st.markdown("<div class='floating-logo' style='font-size: 3.4rem; text-align: center;'>🔮</div>", unsafe_allow_html=True)
-    with col_head:
-        st.markdown("""
-            <div style='margin-bottom: 3px;'>
-                <span class='live-beacon'></span>
-                <span style='color: #38BDF8; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;'>
-                    Pre-Trained Benchmark Engine Active
-                </span>
+    # Header Section (Responsive Flex Layout)
+    st.markdown("""
+        <div class="responsive-header">
+            <div class="floating-logo header-logo">🔮</div>
+            <div class="header-content">
+                <div style="margin-bottom: 3px;">
+                    <span class="live-beacon"></span>
+                    <span style="color: #38BDF8; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">
+                        Pre-Trained Benchmark Engine Active
+                    </span>
+                </div>
+                <h1 class="animated-gradient-title">
+                    Customer Segmentation & Churn Intelligence Engine
+                </h1>
+                <p class="header-subtitle">
+                    Production-grade pre-trained machine learning platform for customer churn risk prediction, behavioral K-Means clustering, and anomaly detection with interactive motion visualizations.
+                </p>
             </div>
-            <h1 class='animated-gradient-title'>
-                Customer Segmentation & Churn Intelligence Engine
-            </h1>
-            <p style='color: #94A3B8; font-size: 1.05rem; margin-top: 0;'>
-                Production-grade pre-trained machine learning platform for customer churn risk prediction, behavioral K-Means clustering, and anomaly detection with interactive motion visualizations.
-            </p>
-        """, unsafe_allow_html=True)
+        </div>
+    """, unsafe_allow_html=True)
 
     st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
 
